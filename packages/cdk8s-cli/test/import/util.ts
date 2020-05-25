@@ -1,4 +1,4 @@
-import { jsiiCompile } from "../../lib/import/jsii";
+import { compile } from "jsii-srcmak";
 import { promises as fs } from 'fs';
 import { withTempDir } from "../../lib/util";
 import { Language, ImportBase } from "../../lib/import/base";
@@ -18,10 +18,13 @@ export function expectImportMatchSnapshot(name: string, fn: () => ImportBase) {
       });
 
       for (const moduleName of importer.moduleNames) {
-        await jsiiCompile(workdir, { 
-          stdout: true,
-          name: moduleName,
-          main: moduleName
+        await compile(workdir, {
+          entrypoint: `${moduleName}.ts`,
+          modules: [
+            'constructs',
+            'cdk8s',
+            '@types/node'
+          ]
         });
       }
     

@@ -1,8 +1,8 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { CodeMaker } from 'codemaker';
-import { withTempDir, shell } from '../util';
-import { jsiiCompile } from './jsii';
+import { withTempDir } from '../util';
+import * as srcmak from 'jsii-srcmak';
 
 export enum Language {
   TYPESCRIPT = 'typescript',
@@ -40,46 +40,23 @@ export abstract class ImportBase {
 
       if (isTypescript) {
         await code.save(outdir);
-      }
-    }
+      } else {
+        // this is not typescript, so we generate in a staging directory and harvest the code
+        await withTempDir('importer', async () => {
+          await code.save('.');
 
-    if (isTypescript) return;
-
-    for (const name of this.moduleNames) {
-      // this is not typescript, so we generate in a staging directory and harvest the code
-      await withTempDir('importer', async () => {
-        await code.save('.');
-        await jsiiCompile('.', {
-          main: name,
-          moduleNamePrefix,
-          name,
+          await srcmak.srcmak('.', outdir, {
+            entrypoint: fileName,
+            pythonName: moduleNamePrefix ? `${moduleNamePrefix}.${name}` : name,
+            modules: [
+              'constructs',
+              'cdk8s',
+              '@types/node'
+            ]
+          });
         });
 
-        const pacmak = require.resolve('jsii-pacmak/bin/jsii-pacmak');
-        await shell(pacmak, [ '--target', options.targetLanguage, '--code-only' ]);
-        await this.harvestCode(options, outdir, name);
-      });
+      }
     }
-  }
-
-  private async harvestCode(options: ImportOptions, targetdir: string, moduleName: string) {
-    const { moduleNamePrefix } = options
-    switch (options.targetLanguage) {
-      case Language.TYPESCRIPT:
-        throw new Error('no op for typescript');
-  
-      case Language.PYTHON:
-        await this.harvestPython(targetdir, moduleNamePrefix ? moduleNamePrefix : moduleName);
-        break;
-  
-      default:
-        throw new Error(`unsupported language ${options.targetLanguage} (yet)`);
-    }
-  
-  }
-
-  private async harvestPython(targetdir: string, moduleName: string) {
-    const target = path.join(targetdir, moduleName);
-    await fs.move(`dist/python/src/${moduleName}`, target, { overwrite: true });
   }
 }
