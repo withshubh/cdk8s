@@ -9,8 +9,8 @@ Object {
     ],
   },
   "dependencies": Object {
-    "cdk8s": "*",
-    "constructs": "*",
+    "cdk8s": "0.0.0",
+    "constructs": "2.0.1",
   },
   "dependencyClosure": Object {
     "cdk8s": Object {
@@ -59,9 +59,9 @@ Object {
     },
   },
   "description": "generated",
-  "fingerprint": "vONNG0K9D0caH0c0y/rZ9XF8P2OaetoMJKgjTyQzzE4=",
+  "fingerprint": "lTu2Mp2zTBG9koKowbfEsgHw9ZXqsJZhzeNPYE1XS+U=",
   "homepage": "http://generated",
-  "jsiiVersion": "1.1.0 (build df55f5e)",
+  "jsiiVersion": "1.5.0 (build 46538f8)",
   "license": "Apache-2.0",
   "name": "generated",
   "repository": Object {
@@ -72,6 +72,10 @@ Object {
   "targets": Object {
     "js": Object {
       "npm": "generated",
+    },
+    "python": Object {
+      "distName": "generated",
+      "module": "jenkins",
     },
   },
   "types": Object {
@@ -12773,8 +12777,8 @@ Object {
     ],
   },
   "dependencies": Object {
-    "cdk8s": "*",
-    "constructs": "*",
+    "cdk8s": "0.0.0",
+    "constructs": "2.0.1",
   },
   "dependencyClosure": Object {
     "cdk8s": Object {
@@ -12823,9 +12827,9 @@ Object {
     },
   },
   "description": "generated",
-  "fingerprint": "6mhxbRsh+LKgu7F3/+lun8mEZfOclI/4fWxIMr9VWqU=",
+  "fingerprint": "ffkRgEeXURGmGw2jMMXs0s1AmeRC64niBtwtDKHBWmg=",
   "homepage": "http://generated",
-  "jsiiVersion": "1.1.0 (build df55f5e)",
+  "jsiiVersion": "1.5.0 (build 46538f8)",
   "license": "Apache-2.0",
   "name": "generated",
   "repository": Object {
@@ -12836,6 +12840,10 @@ Object {
   "targets": Object {
     "js": Object {
       "npm": "generated",
+    },
+    "python": Object {
+      "distName": "generated",
+      "module": "crontab",
     },
   },
   "types": Object {
@@ -13012,8 +13020,8 @@ Object {
     ],
   },
   "dependencies": Object {
-    "cdk8s": "*",
-    "constructs": "*",
+    "cdk8s": "0.0.0",
+    "constructs": "2.0.1",
   },
   "dependencyClosure": Object {
     "cdk8s": Object {
@@ -13062,9 +13070,9 @@ Object {
     },
   },
   "description": "generated",
-  "fingerprint": "EfYGOCqa2q4JsbS0zpe/K03OzsizBZoQuQKb/C2hLtE=",
+  "fingerprint": "cSWClSa/YL6+6p7EG0e91ETX1MwP1pUPbhAoEOu9eSA=",
   "homepage": "http://generated",
-  "jsiiVersion": "1.1.0 (build df55f5e)",
+  "jsiiVersion": "1.5.0 (build 46538f8)",
   "license": "Apache-2.0",
   "name": "generated",
   "repository": Object {
@@ -13075,6 +13083,10 @@ Object {
   "targets": Object {
     "js": Object {
       "npm": "generated",
+    },
+    "python": Object {
+      "distName": "generated",
+      "module": "othercrontab",
     },
   },
   "types": Object {
@@ -13251,8 +13263,8 @@ Object {
     ],
   },
   "dependencies": Object {
-    "cdk8s": "*",
-    "constructs": "*",
+    "cdk8s": "0.0.0",
+    "constructs": "2.0.1",
   },
   "dependencyClosure": Object {
     "cdk8s": Object {
@@ -13301,9 +13313,9 @@ Object {
     },
   },
   "description": "generated",
-  "fingerprint": "vejn5FVqmqeE9awUrWpafy8VvWbczhhSQtiJD/cnwTg=",
+  "fingerprint": "lu3fWFGUvPb8U9K8mqem2EXgQMuzkcuSTIovuD5VvoA=",
   "homepage": "http://generated",
-  "jsiiVersion": "1.1.0 (build df55f5e)",
+  "jsiiVersion": "1.5.0 (build 46538f8)",
   "license": "Apache-2.0",
   "name": "generated",
   "repository": Object {
@@ -13314,6 +13326,10 @@ Object {
   "targets": Object {
     "js": Object {
       "npm": "generated",
+    },
+    "python": Object {
+      "distName": "generated",
+      "module": "thanosruler",
     },
   },
   "types": Object {

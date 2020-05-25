@@ -3,8 +3,8 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import { CodeMaker } from "codemaker";
 import { JSONSchema4 } from "json-schema";
-import { compile } from "jsii-srcmak";
 import { withTempDir } from "../../lib/util";
+import { srcmak } from "jsii-srcmak";
 
 jest.setTimeout(60_000); // 1min
 
@@ -179,13 +179,8 @@ async function generate(gen: TypeGenerator) {
   const source = await fs.readFile(path.join('.', entrypoint), 'utf-8');
 
   try {
-    await compile('.', {
-      entrypoint: 'index.ts',
-      modules: [
-        'constructs',
-        'cdk8s',
-        '@types/node'
-      ]
+    await srcmak('.', '.', {
+      moduleDirs: [ 'constructs', 'cdk8s', '@types/node' ].map(d => path.dirname(require.resolve(`${d}/package.json`)))
     });
   } catch (e) {
     console.error(source);

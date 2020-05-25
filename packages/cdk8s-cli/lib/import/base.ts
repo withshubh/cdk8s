@@ -17,14 +17,26 @@ export interface ImportOptions {
   readonly moduleNamePrefix?: string;
   readonly targetLanguage: Language;
   readonly outdir: string;
+
+  /**
+   * Path to copy the output .jsii file.
+   * @default - jsii file is not emitted
+   */
+  readonly outputJsii?: string;
+}
+
+export interface GenerateResult {
+  readonly deps?: string[]; // a list of module names to link against
 }
 
 export abstract class ImportBase {
   public abstract get moduleNames(): string[];
-  protected abstract async generateTypeScript(code: CodeMaker, moduleName?: string): Promise<void>;
+
+  protected abstract async generateTypeScript(code: CodeMaker, moduleName?: string): Promise<GenerateResult>;
 
   public async import(options: ImportOptions) {
     const code = new CodeMaker();
+    const outputJsii = options.outputJsii ? path.resolve(options.outputJsii) : undefined;
 
     const outdir = path.resolve(options.outdir);
     await fs.mkdirp(outdir);
@@ -35,7 +47,7 @@ export abstract class ImportBase {
       const fileName = moduleNamePrefix ? `${moduleNamePrefix}-${name}.ts` : `${name}.ts`;
       code.openFile(fileName);
       code.indentation = 2;
-      await this.generateTypeScript(code, name);
+      const result = await this.generateTypeScript(code, name);
       code.closeFile(fileName);
 
       if (isTypescript) {
@@ -45,15 +57,23 @@ export abstract class ImportBase {
         await withTempDir('importer', async () => {
           await code.save('.');
 
-          await srcmak.srcmak('.', outdir, {
+          // these are the module dependencies we compile against
+          const deps = [
+            '@types/node',
+            ...result.deps || []
+          ];
+
+          const opts: srcmak.Options = {
             entrypoint: fileName,
-            pythonName: moduleNamePrefix ? `${moduleNamePrefix}.${name}` : name,
-            modules: [
-              'constructs',
-              'cdk8s',
-              '@types/node'
-            ]
-          });
+            moduleDirs: deps.map(dep => path.dirname(require.resolve(`${dep}/package.json`))),
+            outputJsii: outputJsii
+          };
+
+          if (options.targetLanguage === Language.PYTHON) {
+            opts.pythonName = moduleNamePrefix ? `${moduleNamePrefix}.${name}` : name;
+          }
+
+          await srcmak.srcmak('.', outdir, opts);
         });
 
       }

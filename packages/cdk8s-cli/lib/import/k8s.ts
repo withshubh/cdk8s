@@ -71,6 +71,13 @@ export class ImportKubernetesApi extends ImportBase {
     }
   
     typeGenerator.generate(code);
+
+    return {
+      deps: [
+        'cdk8s',
+        'constructs'
+      ]
+    }
   }
 
   private emitConstructForApiObject(typeGenerator: TypeGenerator, apidef: ApiObjectDefinition) {
