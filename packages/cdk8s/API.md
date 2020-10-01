@@ -326,7 +326,13 @@ __Returns__:
 
 #### toJson()🔹 <a id="cdk8s-chart-tojson"></a>
 
-Renders this chart to a set of Kubernetes JSON resources.
+Synthesize a single chart.
+
+Each element returned in the resulting array represents a different ApiObject
+in the scope of the chart.
+
+Note that the returned array order is important. It is determined by the various dependencies between
+the constructs in the chart, where the first element is the one without dependencies, and so on...
 
 ```ts
 toJson(): Array<any>

@@ -163,7 +163,22 @@ test('app with chart dependencies via custom constructs', () => {
 
 });
 
-test('synth calls validate', () => {
+test('synth calls validate on app', () => {
+
+  class ValidatingApp extends App {
+
+    protected onValidate(): string[] {
+      return ['Error from app']
+    }
+  }
+
+  const app = new ValidatingApp();
+
+  expect(() => app.synth()).toThrowError('Error from app');
+
+})
+
+test('synth calls validate on construct in charts', () => {
 
   class ValidatingConstruct extends Construct {
 
@@ -174,17 +189,15 @@ test('synth calls validate', () => {
     }
 
     protected onValidate(): string[] {
-      this.validateInvoked = true;
-      return []
+      return ['Error from construct']
     }
   }
 
   const app = new App();
+  const chart = new Chart(app, 'Chart');
 
-  const construct = new ValidatingConstruct(app, 'ValidatingConstruct');
+  new ValidatingConstruct(chart, 'ValidatingConstruct');
 
-  app.synth();
-
-  expect(construct.validateInvoked).toBeTruthy();
+  expect(() => app.synth()).toThrowError('Error from construct');
 
 })

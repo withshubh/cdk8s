@@ -1,7 +1,7 @@
 import { Construct, Node, IConstruct } from 'constructs';
 import { ApiObject } from './api-object';
 import { Names } from './names';
-import { App } from './app';
+import { DependencyGraph } from './dependency';
 
 export interface ChartOptions {
   /**
@@ -78,11 +78,43 @@ export class Chart extends Construct {
   }
 
   /**
-   * Renders this chart to a set of Kubernetes JSON resources.
-   * @returns array of resource manifests
+   * Synthesize a single chart.
+   *
+   * Each element returned in the resulting array represents a different ApiObject
+   * in the scope of the chart.
+   *
+   * Note that the returned array order is important. It is determined by the various dependencies between
+   * the constructs in the chart, where the first element is the one without dependencies, and so on...
+   *
+   * @returns An array of JSON objects.
    */
   public toJson(): any[] {
-    return App._synthChart(this);
+
+    for (const dep of Node.of(this).dependencies) {
+
+      // create explicit api object dependencies from implicit construct dependencies
+      const targetApiObjects = Node.of(dep.target).findAll().filter(c => c instanceof ApiObject);
+      const sourceApiObjects = Node.of(dep.source).findAll().filter(c => c instanceof ApiObject);
+
+      for (const target of targetApiObjects) {
+        for (const source of sourceApiObjects) {
+          Node.of(source).addDependency(target);
+        }
+      }
+
+    }
+
+    // Note this is a copy-paste of https://github.com/aws/constructs/blob/master/lib/construct.ts#L438.
+    const errors = Node.of(this).validate();
+    if (errors.length > 0) {
+      const errorList = errors.map(e => `[${Node.of(e.source).path}] ${e.message}`).join('\n  ');
+      throw new Error(`Validation failed with the following errors:\n  ${errorList}`);
+    }
+
+    return new DependencyGraph(Node.of(this)).topology()
+      .filter(x => x instanceof ApiObject)
+      .map(x => (x as ApiObject).toJson());
+
   }
 
 }
