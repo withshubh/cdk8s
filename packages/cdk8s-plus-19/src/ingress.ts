@@ -218,9 +218,9 @@ export class IngressBackend {
       service: {
         name: service.name,
         port: {
-          number: servicePort
-        }
-      }
+          number: servicePort,
+        },
+      },
     });
   }
 

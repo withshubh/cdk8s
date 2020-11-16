@@ -13,8 +13,12 @@ describe('IngressBackend', () => {
 
       // THEN
       expect(IngressBackend.fromService(service)._toKube()).toEqual({
-        serviceName: 'test-my-service-pod-1c817a88',
-        servicePort: 8899,
+        service: {
+          name: 'test-my-service-pod-1c817a88',
+          port: {
+            number: 8899,
+          },
+        },
       });
     });
 
@@ -50,8 +54,12 @@ describe('IngressBackend', () => {
 
       // THEN
       expect(IngressBackend.fromService(service, { port: 6011 })._toKube()).toEqual({
-        serviceName: 'test-my-service-pod-1c817a88',
-        servicePort: 6011,
+        service: {
+          name: 'test-my-service-pod-1c817a88',
+          port: {
+            number: 6011,
+          },
+        },
       });
     });
 
@@ -67,8 +75,12 @@ describe('IngressBackend', () => {
 
       // THEN
       expect(IngressBackend.fromService(service, { port: 8899 })._toKube()).toEqual({
-        serviceName: 'test-my-service-pod-1c817a88',
-        servicePort: 8899,
+        service: {
+          name: 'test-my-service-pod-1c817a88',
+          port: {
+            number: 8899,
+          },
+        },
       });
     });
 
@@ -117,13 +129,17 @@ describe('Ingress', () => {
       // THEN
       expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toStrictEqual([
         {
-          apiVersion: 'networking.k8s.io/v1beta1',
+          apiVersion: 'networking.k8s.io/v1',
           kind: 'Ingress',
           metadata: { name: 'test-my-ingress-ingress-56b6a667' },
           spec: {
-            backend: {
-              serviceName: 'test-my-service-pod-1c817a88',
-              servicePort: 80,
+            defaultBackend: {
+              service: {
+                name: 'test-my-service-pod-1c817a88',
+                port: {
+                  number: 80,
+                },
+              },
             },
           },
         },
@@ -142,13 +158,17 @@ describe('Ingress', () => {
       // THEN
       expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toStrictEqual([
         {
-          apiVersion: 'networking.k8s.io/v1beta1',
+          apiVersion: 'networking.k8s.io/v1',
           kind: 'Ingress',
           metadata: { name: 'test-my-ingress-ingress-56b6a667' },
           spec: {
-            backend: {
-              serviceName: 'test-my-service-pod-1c817a88',
-              servicePort: 80,
+            defaultBackend: {
+              service: {
+                name: 'test-my-service-pod-1c817a88',
+                port: {
+                  number: 80,
+                },
+              },
             },
           },
         },
@@ -169,7 +189,7 @@ describe('Ingress', () => {
     // THEN
     expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toStrictEqual([
       {
-        apiVersion: 'networking.k8s.io/v1beta1',
+        apiVersion: 'networking.k8s.io/v1',
         kind: 'Ingress',
         metadata: { name: 'test-my-ingress-ingress-56b6a667' },
         spec: {
@@ -179,8 +199,12 @@ describe('Ingress', () => {
               paths: [
                 {
                   backend: {
-                    serviceName: 'test-my-service-pod-1c817a88',
-                    servicePort: 80,
+                    service: {
+                      name: 'test-my-service-pod-1c817a88',
+                      port: {
+                        number: 80,
+                      },
+                    },
                   },
                 },
               ],
@@ -206,7 +230,7 @@ describe('Ingress', () => {
     // THEN
     expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toStrictEqual([
       {
-        apiVersion: 'networking.k8s.io/v1beta1',
+        apiVersion: 'networking.k8s.io/v1',
         kind: 'Ingress',
         metadata: { name: 'test-my-ingress-ingress-56b6a667' },
         spec: {
@@ -218,15 +242,23 @@ describe('Ingress', () => {
                   {
                     path: '/bar',
                     backend: {
-                      serviceName: 'test-my-service-pod-1c817a88',
-                      servicePort: 80,
+                      service: {
+                        name: 'test-my-service-pod-1c817a88',
+                        port: {
+                          number: 80,
+                        },
+                      },
                     },
                   },
                   {
                     path: '/foo',
                     backend: {
-                      serviceName: 'test-my-service-pod-1c817a88',
-                      servicePort: 80,
+                      service: {
+                        name: 'test-my-service-pod-1c817a88',
+                        port: {
+                          number: 80,
+                        },
+                      },
                     },
                   },
                 ],
@@ -238,15 +270,23 @@ describe('Ingress', () => {
                 paths: [
                   {
                     backend: {
-                      serviceName: 'test-my-service-pod-1c817a88',
-                      servicePort: 80,
+                      service: {
+                        name: 'test-my-service-pod-1c817a88',
+                        port: {
+                          number: 80,
+                        },
+                      },
                     },
                   },
                   {
                     path: '/',
                     backend: {
-                      serviceName: 'test-my-service-pod-1c817a88',
-                      servicePort: 80,
+                      service: {
+                        name: 'test-my-service-pod-1c817a88',
+                        port: {
+                          number: 80,
+                        },
+                      },
                     },
                   },
                 ],
@@ -271,7 +311,7 @@ describe('Ingress', () => {
     // THEN
     expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toStrictEqual([
       {
-        apiVersion: 'networking.k8s.io/v1beta1',
+        apiVersion: 'networking.k8s.io/v1',
         kind: 'Ingress',
         metadata: { name: 'test-my-ingress-ingress-56b6a667' },
         spec: {
@@ -282,15 +322,23 @@ describe('Ingress', () => {
                   {
                     path: '/foo',
                     backend: {
-                      serviceName: 'test-my-service-pod-1c817a88',
-                      servicePort: 80,
+                      service: {
+                        name: 'test-my-service-pod-1c817a88',
+                        port: {
+                          number: 80,
+                        },
+                      },
                     },
                   },
                   {
                     path: '/foo/bar',
                     backend: {
-                      serviceName: 'test-my-service-pod-1c817a88',
-                      servicePort: 80,
+                      service: {
+                        name: 'test-my-service-pod-1c817a88',
+                        port: {
+                          number: 80,
+                        },
+                      },
                     },
                   },
                 ],
@@ -320,16 +368,24 @@ describe('Ingress', () => {
     });
 
     // THEN
-    const expectedBackend = { serviceName: 'test-my-service-pod-1c817a88', servicePort: 4000 };
+    const expectedBackend = {
+      service: {
+        name: 'test-my-service-pod-1c817a88',
+        port: {
+          number: 4000,
+        },
+      },
+    };
+
     expect(Testing.synth(chart).filter(x => x.kind === 'Ingress')).toEqual([
       {
-        apiVersion: 'networking.k8s.io/v1beta1',
+        apiVersion: 'networking.k8s.io/v1',
         kind: 'Ingress',
         metadata: {
           name: 'test-my-ingress-ingress-56b6a667',
         },
         spec: {
-          backend: expectedBackend,
+          defaultBackend: expectedBackend,
           rules: [
             { host: 'foo.bar', http: { paths: [{ backend: expectedBackend }] } },
             { http: { paths: [{ path: '/just/path', backend: expectedBackend }] } },

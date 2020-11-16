@@ -10790,7 +10790,7 @@ export interface NetworkPolicyIngressRule {
  */
 export enum IoK8SApimachineryPkgApisMetaV1DeleteOptionsKind {
   /** DeleteOptions */
-  DELETE_OPTIONS = "DeleteOptions",
+  DELETE_OPTIONS = 'DeleteOptions',
 }
 
 /**
