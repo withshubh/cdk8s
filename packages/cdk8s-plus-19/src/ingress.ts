@@ -51,7 +51,7 @@ export class Ingress extends Resource {
     this.apiObject = new k8s.Ingress(this, 'Ingress', {
       metadata: props.metadata,
       spec: {
-        backend: Lazy.any({ produce: () => this._defaultBackend?._toKube() }),
+        defaultBackend: Lazy.any({ produce: () => this._defaultBackend?._toKube() }),
         rules: Lazy.any({ produce: () => this.synthRules() }),
       },
     });
@@ -215,8 +215,12 @@ export class IngressBackend {
     }
 
     return new IngressBackend({
-      serviceName: service.name,
-      servicePort,
+      service: {
+        name: service.name,
+        port: {
+          number: servicePort
+        }
+      }
     });
   }
 

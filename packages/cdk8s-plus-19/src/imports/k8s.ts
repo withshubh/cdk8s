@@ -6315,7 +6315,7 @@ export interface PersistentVolumeSpec {
    *
    * @schema io.k8s.api.core.v1.PersistentVolumeSpec#capacity
    */
-  readonly capacity?: { [key: string]: string };
+  readonly capacity?: { [key: string]: Quantity };
 
   /**
    * CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
@@ -6686,7 +6686,7 @@ export interface PodSpec {
    *
    * @schema io.k8s.api.core.v1.PodSpec#overhead
    */
-  readonly overhead?: { [key: string]: string };
+  readonly overhead?: { [key: string]: Quantity };
 
   /**
    * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
@@ -6886,7 +6886,7 @@ export interface ResourceQuotaSpec {
    *
    * @schema io.k8s.api.core.v1.ResourceQuotaSpec#hard
    */
-  readonly hard?: { [key: string]: string };
+  readonly hard?: { [key: string]: Quantity };
 
   /**
    * scopeSelector is also a collection of filters like scopes that must match each object tracked by a quota but expressed using ScopeSelectorOperator in combination with possible values. For a resource to match, both scopes AND scopeSelector (if specified in spec), must be matched.
@@ -7283,7 +7283,7 @@ export interface Overhead {
    *
    * @schema io.k8s.api.node.v1beta1.Overhead#podFixed
    */
-  readonly podFixed?: { [key: string]: string };
+  readonly podFixed?: { [key: string]: Quantity };
 
 }
 
@@ -7342,7 +7342,7 @@ export interface DeleteOptions {
    *
    * @schema io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions#kind
    */
-  readonly kind?: string;
+  readonly kind?: IoK8SApimachineryPkgApisMetaV1DeleteOptionsKind;
 
   /**
    * Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -7378,14 +7378,14 @@ export interface PodDisruptionBudgetSpec {
    *
    * @schema io.k8s.api.policy.v1beta1.PodDisruptionBudgetSpec#maxUnavailable
    */
-  readonly maxUnavailable?: string;
+  readonly maxUnavailable?: IntOrString;
 
   /**
    * An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".
    *
    * @schema io.k8s.api.policy.v1beta1.PodDisruptionBudgetSpec#minAvailable
    */
-  readonly minAvailable?: string;
+  readonly minAvailable?: IntOrString;
 
   /**
    * Label query over pods whose evictions are managed by the disruption budget.
@@ -8508,35 +8508,35 @@ export interface LimitRangeItem {
    *
    * @schema io.k8s.api.core.v1.LimitRangeItem#default
    */
-  readonly default?: { [key: string]: string };
+  readonly default?: { [key: string]: Quantity };
 
   /**
    * DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.
    *
    * @schema io.k8s.api.core.v1.LimitRangeItem#defaultRequest
    */
-  readonly defaultRequest?: { [key: string]: string };
+  readonly defaultRequest?: { [key: string]: Quantity };
 
   /**
    * Max usage constraints on this kind by resource name.
    *
    * @schema io.k8s.api.core.v1.LimitRangeItem#max
    */
-  readonly max?: { [key: string]: string };
+  readonly max?: { [key: string]: Quantity };
 
   /**
    * MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.
    *
    * @schema io.k8s.api.core.v1.LimitRangeItem#maxLimitRequestRatio
    */
-  readonly maxLimitRequestRatio?: { [key: string]: string };
+  readonly maxLimitRequestRatio?: { [key: string]: Quantity };
 
   /**
    * Min usage constraints on this kind by resource name.
    *
    * @schema io.k8s.api.core.v1.LimitRangeItem#min
    */
-  readonly min?: { [key: string]: string };
+  readonly min?: { [key: string]: Quantity };
 
   /**
    * Type of resource that this limit applies to.
@@ -8722,6 +8722,21 @@ export interface AzureFilePersistentVolumeSource {
    */
   readonly shareName: string;
 
+}
+
+/**
+ * @schema io.k8s.apimachinery.pkg.api.resource.Quantity
+ */
+export class Quantity {
+  public static fromString(value: string): Quantity {
+    return new Quantity(value);
+  }
+  public static fromNumber(value: number): Quantity {
+    return new Quantity(value);
+  }
+  private constructor(value: any) {
+    Object.defineProperty(this, 'resolve', { value: () => value });
+  }
 }
 
 /**
@@ -9622,14 +9637,14 @@ export interface ResourceRequirements {
    *
    * @schema io.k8s.api.core.v1.ResourceRequirements#limits
    */
-  readonly limits?: { [key: string]: string };
+  readonly limits?: { [key: string]: Quantity };
 
   /**
    * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
    *
    * @schema io.k8s.api.core.v1.ResourceRequirements#requests
    */
-  readonly requests?: { [key: string]: string };
+  readonly requests?: { [key: string]: Quantity };
 
 }
 
@@ -10531,7 +10546,7 @@ export interface ServicePort {
    *
    * @schema io.k8s.api.core.v1.ServicePort#targetPort
    */
-  readonly targetPort?: string;
+  readonly targetPort?: IntOrString;
 
 }
 
@@ -10769,6 +10784,16 @@ export interface NetworkPolicyIngressRule {
 }
 
 /**
+ * Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+ *
+ * @schema IoK8SApimachineryPkgApisMetaV1DeleteOptionsKind
+ */
+export enum IoK8SApimachineryPkgApisMetaV1DeleteOptionsKind {
+  /** DeleteOptions */
+  DELETE_OPTIONS = "DeleteOptions",
+}
+
+/**
  * Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
  *
  * @schema io.k8s.apimachinery.pkg.apis.meta.v1.Preconditions
@@ -10788,6 +10813,21 @@ export interface Preconditions {
    */
   readonly uid?: string;
 
+}
+
+/**
+ * @schema io.k8s.apimachinery.pkg.util.intstr.IntOrString
+ */
+export class IntOrString {
+  public static fromString(value: string): IntOrString {
+    return new IntOrString(value);
+  }
+  public static fromNumber(value: number): IntOrString {
+    return new IntOrString(value);
+  }
+  private constructor(value: any) {
+    Object.defineProperty(this, 'resolve', { value: () => value });
+  }
 }
 
 /**
@@ -11440,7 +11480,7 @@ export interface RollingUpdateDaemonSet {
    *
    * @schema io.k8s.api.apps.v1.RollingUpdateDaemonSet#maxUnavailable
    */
-  readonly maxUnavailable?: string;
+  readonly maxUnavailable?: IntOrString;
 
 }
 
@@ -11456,7 +11496,7 @@ export interface RollingUpdateDeployment {
    * @default 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
    * @schema io.k8s.api.apps.v1.RollingUpdateDeployment#maxSurge
    */
-  readonly maxSurge?: string;
+  readonly maxSurge?: IntOrString;
 
   /**
    * The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
@@ -11464,7 +11504,7 @@ export interface RollingUpdateDeployment {
    * @default 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
    * @schema io.k8s.api.apps.v1.RollingUpdateDeployment#maxUnavailable
    */
-  readonly maxUnavailable?: string;
+  readonly maxUnavailable?: IntOrString;
 
 }
 
@@ -12248,7 +12288,7 @@ export interface EmptyDirVolumeSource {
    *
    * @schema io.k8s.api.core.v1.EmptyDirVolumeSource#sizeLimit
    */
-  readonly sizeLimit?: string;
+  readonly sizeLimit?: Quantity;
 
 }
 
@@ -12935,7 +12975,7 @@ export interface NetworkPolicyPort {
    *
    * @schema io.k8s.api.networking.v1.NetworkPolicyPort#port
    */
-  readonly port?: string;
+  readonly port?: IntOrString;
 
   /**
    * The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
@@ -13380,7 +13420,7 @@ export interface HttpGetAction {
    *
    * @schema io.k8s.api.core.v1.HTTPGetAction#port
    */
-  readonly port: string;
+  readonly port: IntOrString;
 
   /**
    * Scheme to use for connecting to the host. Defaults to HTTP.
@@ -13410,7 +13450,7 @@ export interface TcpSocketAction {
    *
    * @schema io.k8s.api.core.v1.TCPSocketAction#port
    */
-  readonly port: string;
+  readonly port: IntOrString;
 
 }
 
@@ -13740,7 +13780,7 @@ export interface ResourceFieldSelector {
    *
    * @schema io.k8s.api.core.v1.ResourceFieldSelector#divisor
    */
-  readonly divisor?: string;
+  readonly divisor?: Quantity;
 
   /**
    * Required: resource to select
