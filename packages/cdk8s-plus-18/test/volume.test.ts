@@ -1,5 +1,6 @@
-import { Testing } from 'cdk8s';
-import { Volume, ConfigMap, EmptyDirMedium, Size } from '../src';
+import { Testing, Size } from 'cdk8s';
+import { Volume, ConfigMap, EmptyDirMedium } from '../src';
+import * as k8s from '../src/imports/k8s';
 
 describe('fromConfigMap', () => {
   test('minimal definition', () => {
@@ -11,7 +12,7 @@ describe('fromConfigMap', () => {
     const vol = Volume.fromConfigMap(configMap);
 
     // THEN
-    expect(vol._toKube()).toMatchInlineSnapshot(`
+    expect(volumeSpec(vol)).toMatchInlineSnapshot(`
       Object {
         "configMap": Object {
           "defaultMode": undefined,
@@ -35,8 +36,8 @@ describe('fromConfigMap', () => {
     });
 
     // THEN
-    expect(vol._toKube().name).toBe('filesystem');
-    expect(vol._toKube().configMap?.name).toBe(
+    expect(volumeSpec(vol).name).toBe('filesystem');
+    expect(volumeSpec(vol).configMap?.name).toBe(
       'test-my-config-map-configmap-d0fa5644',
     );
   });
@@ -52,7 +53,7 @@ describe('fromConfigMap', () => {
     });
 
     // THEN
-    expect(vol._toKube().configMap?.defaultMode).toBe(0o777);
+    expect(volumeSpec(vol).configMap?.defaultMode).toBe(0o777);
   });
 
   test('optional', () => {
@@ -66,9 +67,9 @@ describe('fromConfigMap', () => {
     const vol2 = Volume.fromConfigMap(configMap, { optional: false });
 
     // THEN
-    expect(vol0._toKube().configMap?.optional).toBe(undefined);
-    expect(vol1._toKube().configMap?.optional).toBe(true);
-    expect(vol2._toKube().configMap?.optional).toBe(false);
+    expect(volumeSpec(vol0).configMap?.optional).toBe(undefined);
+    expect(volumeSpec(vol1).configMap?.optional).toBe(true);
+    expect(volumeSpec(vol2).configMap?.optional).toBe(false);
   });
 
   test('items', () => {
@@ -85,12 +86,12 @@ describe('fromConfigMap', () => {
     });
 
     // THEN
-    expect(vol._toKube().configMap?.items?.[0]).toStrictEqual({
+    expect(volumeSpec(vol).configMap?.items?.[0]).toStrictEqual({
       key: 'key1',
       mode: undefined,
       path: 'path/to/key1',
     });
-    expect(vol._toKube().configMap?.items?.[1]).toStrictEqual({
+    expect(volumeSpec(vol).configMap?.items?.[1]).toStrictEqual({
       key: 'key2',
       mode: 0o100,
       path: 'path/key2',
@@ -111,12 +112,12 @@ describe('fromConfigMap', () => {
     });
 
     // THEN
-    expect(vol._toKube().configMap?.items?.[0]).toStrictEqual({
+    expect(volumeSpec(vol).configMap?.items?.[0]).toStrictEqual({
       key: 'key1',
       mode: undefined,
       path: 'path1',
     });
-    expect(vol._toKube().configMap?.items?.[1]).toStrictEqual({
+    expect(volumeSpec(vol).configMap?.items?.[1]).toStrictEqual({
       key: 'key2',
       mode: undefined,
       path: 'path2',
@@ -130,7 +131,7 @@ describe('fromEmptyDir', () => {
     const vol = Volume.fromEmptyDir('main');
 
     // THEN
-    expect(vol._toKube()).toStrictEqual({
+    expect(volumeSpec(vol)).toStrictEqual({
       name: 'main',
       emptyDir: {
         medium: undefined,
@@ -141,16 +142,20 @@ describe('fromEmptyDir', () => {
 
   test('default medium', () => {
     const vol = Volume.fromEmptyDir('main', { medium: EmptyDirMedium.DEFAULT });
-    expect(vol._toKube().emptyDir?.medium).toEqual('');
+    expect(volumeSpec(vol).emptyDir?.medium).toEqual('');
   });
 
   test('memory medium', () => {
     const vol = Volume.fromEmptyDir('main', { medium: EmptyDirMedium.MEMORY });
-    expect(vol._toKube().emptyDir?.medium).toEqual('Memory');
+    expect(volumeSpec(vol).emptyDir?.medium).toEqual('Memory');
   });
 
   test('size limit', () => {
     const vol = Volume.fromEmptyDir('main', { sizeLimit: Size.gibibytes(20) });
-    expect(vol._toKube().emptyDir?.sizeLimit).toEqual('20480Mi');
+    expect(volumeSpec(vol).emptyDir?.sizeLimit).toEqual('20480Mi');
   });
 });
+
+function volumeSpec(vol: Volume): k8s.Volume {
+  return (vol as any)._toKube();
+}

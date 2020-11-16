@@ -50,7 +50,7 @@ export class Size {
   private readonly amount: number;
   private readonly unit: StorageUnit;
 
-  private constructor(amount: number, unit: StorageUnit) {
+  protected constructor(amount: number, unit: StorageUnit) {
     if (amount < 0) {
       throw new Error(`Storage amounts cannot be negative. Received: ${amount}`);
     }
@@ -118,14 +118,14 @@ export interface SizeConversionOptions {
   readonly rounding?: SizeRoundingBehavior;
 }
 
-class StorageUnit {
+export class StorageUnit {
   public static readonly Kibibytes = new StorageUnit('kibibytes', 1);
   public static readonly Mebibytes = new StorageUnit('mebibytes', 1024);
   public static readonly Gibibytes = new StorageUnit('gibibytes', 1024 * 1024);
   public static readonly Tebibytes = new StorageUnit('tebibytes', 1024 * 1024 * 1024);
   public static readonly Pebibytes = new StorageUnit('pebibytes', 1024 * 1024 * 1024 * 1024);
 
-  private constructor(public readonly label: string, public readonly inKibiBytes: number) {
+  protected constructor(public readonly label: string, public readonly inKibiBytes: number) {
     // MAX_SAFE_INTEGER is 2^53, so by representing storage in kibibytes,
     // the highest storage we can represent is 8 exbibytes.
   }

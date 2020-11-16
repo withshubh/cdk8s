@@ -7,7 +7,6 @@ Name|Description
 [ConfigMap](#cdk8s-plus-18-configmap)|ConfigMap holds configuration data for pods to consume.
 [Container](#cdk8s-plus-18-container)|A single application container that you want to run within a pod.
 [Deployment](#cdk8s-plus-18-deployment)|A Deployment provides declarative updates for Pods and ReplicaSets.
-[Duration](#cdk8s-plus-18-duration)|Represents a length of time.
 [EnvValue](#cdk8s-plus-18-envvalue)|Utility class for creating reading env values from various sources.
 [Ingress](#cdk8s-plus-18-ingress)|Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend.
 [IngressBackend](#cdk8s-plus-18-ingressbackend)|The backend for an ingress path.
@@ -20,7 +19,6 @@ Name|Description
 [Secret](#cdk8s-plus-18-secret)|Kubernetes Secrets let you store and manage sensitive information, such as passwords, OAuth tokens, and ssh keys.
 [Service](#cdk8s-plus-18-service)|An abstract way to expose an application running on a set of Pods as a network service.
 [ServiceAccount](#cdk8s-plus-18-serviceaccount)|A service account provides an identity for processes that run in a Pod.
-[Size](#cdk8s-plus-18-size)|Represents the amount of digital storage.
 [Volume](#cdk8s-plus-18-volume)|Volume represents a named volume in a pod that may be accessed by any container in the pod.
 
 
@@ -57,8 +55,6 @@ Name|Description
 [ServicePort](#cdk8s-plus-18-serviceport)|Definition of a service port.
 [ServicePortOptions](#cdk8s-plus-18-serviceportoptions)|*No description*
 [ServiceProps](#cdk8s-plus-18-serviceprops)|Properties for initialization of `Service`.
-[SizeConversionOptions](#cdk8s-plus-18-sizeconversionoptions)|Options for how to convert time to a different unit.
-[TimeConversionOptions](#cdk8s-plus-18-timeconversionoptions)|Options for how to convert time to a different unit.
 [VolumeMount](#cdk8s-plus-18-volumemount)|Mount a volume from the pod to the container.
 
 
@@ -78,13 +74,12 @@ Name|Description
 
 Name|Description
 ----|-----------
-[EmptyDirMedium](#cdk8s-plus-18-emptydirmedium)|The medium on which to store the volume.
+[EmptyDirMedium](#cdk8s-plus-18-emptydirmedium)|(experimental) The medium on which to store the volume.
 [ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)|*No description*
 [MountPropagation](#cdk8s-plus-18-mountpropagation)|*No description*
 [Protocol](#cdk8s-plus-18-protocol)|*No description*
-[RestartPolicy](#cdk8s-plus-18-restartpolicy)|Restart policy for all containers within the pod.
-[ServiceType](#cdk8s-plus-18-servicetype)|For some parts of your application (for example, frontends) you may want to expose a Service onto an external IP address, that's outside of your cluster.
-[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)|Rounding behaviour when converting between units of `Size`.
+[RestartPolicy](#cdk8s-plus-18-restartpolicy)|(experimental) Restart policy for all containers within the pod.
+[ServiceType](#cdk8s-plus-18-servicetype)|(experimental) For some parts of your application (for example, frontends) you may want to expose a Service onto an external IP address, that's outside of your cluster.
 
 
 
@@ -92,8 +87,8 @@ Name|Description
 
 ConfigMap holds configuration data for pods to consume.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource), [IConfigMap](#cdk8s-plus-18-iconfigmap), [IResource](#cdk8s-plus-18-iresource)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource), [IConfigMap](#cdk8s-plus-17-iconfigmap), [IResource](#cdk8s-plus-17-iresource)
+__Extends__: [ConfigMap](#cdk8s-plus-17-configmap)
 
 ### Initializer
 
@@ -106,98 +101,11 @@ new ConfigMap(scope: Construct, id: string, props?: ConfigMapProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[ConfigMapProps](#cdk8s-plus-18-configmapprops)</code>)  *No description*
+* **props** (<code>[ConfigMapProps](#cdk8s-plus-17-configmapprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
   * **binaryData** (<code>Map<string, string></code>)  BinaryData contains the binary data. __*Optional*__
   * **data** (<code>Map<string, string></code>)  Data contains the configuration data. __*Optional*__
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**binaryData**🔹 | <code>Map<string, string></code> | The binary data associated with this config map.
-**data**🔹 | <code>Map<string, string></code> | The data associated with this config map.
-
-### Methods
-
-
-#### addBinaryData(key, value)🔹 <a id="cdk8s-plus-18-configmap-addbinarydata"></a>
-
-Adds a binary data entry to the config map.
-
-BinaryData can contain byte
-sequences that are not in the UTF-8 range.
-
-```ts
-addBinaryData(key: string, value: string): void
-```
-
-* **key** (<code>string</code>)  The key.
-* **value** (<code>string</code>)  The value.
-
-
-
-
-#### addData(key, value)🔹 <a id="cdk8s-plus-18-configmap-adddata"></a>
-
-Adds a data entry to the config map.
-
-```ts
-addData(key: string, value: string): void
-```
-
-* **key** (<code>string</code>)  The key.
-* **value** (<code>string</code>)  The value.
-
-
-
-
-#### addDirectory(localDir, options?)🔹 <a id="cdk8s-plus-18-configmap-adddirectory"></a>
-
-Adds a directory to the ConfigMap.
-
-```ts
-addDirectory(localDir: string, options?: AddDirectoryOptions): void
-```
-
-* **localDir** (<code>string</code>)  A path to a local directory.
-* **options** (<code>[AddDirectoryOptions](#cdk8s-plus-18-adddirectoryoptions)</code>)  Options.
-  * **exclude** (<code>Array<string></code>)  Glob patterns to exclude when adding files. __*Default*__: include all files
-  * **keyPrefix** (<code>string</code>)  A prefix to add to all keys in the config map. __*Default*__: ""
-
-
-
-
-#### addFile(localFile, key?)🔹 <a id="cdk8s-plus-18-configmap-addfile"></a>
-
-Adds a file to the ConfigMap.
-
-```ts
-addFile(localFile: string, key?: string): void
-```
-
-* **localFile** (<code>string</code>)  The path to the local file.
-* **key** (<code>string</code>)  The ConfigMap key (default to the file name).
-
-
-
-
-#### *static* fromConfigMapName(name)🔹 <a id="cdk8s-plus-18-configmap-fromconfigmapname"></a>
-
-Represents a ConfigMap created elsewhere.
-
-```ts
-static fromConfigMapName(name: string): IConfigMap
-```
-
-* **name** (<code>string</code>)  The name of the config map to import.
-
-__Returns__:
-* <code>[IConfigMap](#cdk8s-plus-18-iconfigmap)</code>
 
 
 
@@ -205,6 +113,7 @@ __Returns__:
 
 A single application container that you want to run within a pod.
 
+__Extends__: [Container](#cdk8s-plus-17-container)
 
 ### Initializer
 
@@ -215,76 +124,19 @@ A single application container that you want to run within a pod.
 new Container(props: ContainerProps)
 ```
 
-* **props** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  *No description*
+* **props** (<code>[ContainerProps](#cdk8s-plus-17-containerprops)</code>)  *No description*
   * **image** (<code>string</code>)  Docker image name. 
   * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
   * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
+  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-17-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
+  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-17-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
+  * **liveness** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
   * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
   * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
+  * **readiness** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
+  * **startup** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
+  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-17-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
   * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**env**🔹 | <code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code> | The environment variables for this container.
-**image**🔹 | <code>string</code> | The container image.
-**imagePullPolicy**🔹 | <code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code> | Image pull policy for this container.
-**mounts**🔹 | <code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code> | Volume mounts configured for this container.
-**name**🔹 | <code>string</code> | The name of the container.
-**args**?🔹 | <code>Array<string></code> | Arguments to the entrypoint.<br/>__*Optional*__
-**command**?🔹 | <code>Array<string></code> | Entrypoint array (the command to execute when the container starts).<br/>__*Optional*__
-**port**?🔹 | <code>number</code> | The port this container exposes.<br/>__*Optional*__
-**workingDir**?🔹 | <code>string</code> | The working directory inside the container.<br/>__*Optional*__
-
-### Methods
-
-
-#### addEnv(name, value)🔹 <a id="cdk8s-plus-18-container-addenv"></a>
-
-Add an environment value to the container.
-
-The variable value can come
-from various dynamic sources such a secrets of config maps.
-
-```ts
-addEnv(name: string, value: EnvValue): void
-```
-
-* **name** (<code>string</code>)  - The variable name.
-* **value** (<code>[EnvValue](#cdk8s-plus-18-envvalue)</code>)  - The variable value.
-
-
-
-
-#### mount(path, volume, options?)🔹 <a id="cdk8s-plus-18-container-mount"></a>
-
-Mount a volume to a specific path so that it is accessible by the container.
-
-Every pod that is configured to use this container will autmoatically have access to the volume.
-
-```ts
-mount(path: string, volume: Volume, options?: MountOptions): void
-```
-
-* **path** (<code>string</code>)  - The desired path in the container.
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  - The volume to mount.
-* **options** (<code>[MountOptions](#cdk8s-plus-18-mountoptions)</code>)  *No description*
-  * **propagation** (<code>[MountPropagation](#cdk8s-plus-18-mountpropagation)</code>)  Determines how mounts are propagated from the host to container and the other way around. __*Default*__: MountPropagation.NONE
-  * **readOnly** (<code>boolean</code>)  Mounted read-only if true, read-write otherwise (false or unspecified). __*Default*__: false
-  * **subPath** (<code>string</code>)  Path within the volume from which the container's volume should be mounted.). __*Default*__: "" the volume's root
-  * **subPathExpr** (<code>string</code>)  Expanded path within the volume from which the container's volume should be mounted. __*Default*__: "" volume's root.
-
-
 
 
 
@@ -316,8 +168,8 @@ The following are typical use cases for Deployments:
 - Use the status of the Deployment as an indicator that a rollout has stuck.
 - Clean up older ReplicaSets that you don't need anymore.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource), [IPodTemplate](#cdk8s-plus-18-ipodtemplate), [IPodSpec](#cdk8s-plus-18-ipodspec)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource), [IPodTemplate](#cdk8s-plus-17-ipodtemplate), [IPodSpec](#cdk8s-plus-17-ipodspec)
+__Extends__: [Deployment](#cdk8s-plus-17-deployment)
 
 ### Initializer
 
@@ -330,305 +182,16 @@ new Deployment(scope: Construct, id: string, props?: DeploymentProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[DeploymentProps](#cdk8s-plus-18-deploymentprops)</code>)  *No description*
+* **props** (<code>[DeploymentProps](#cdk8s-plus-17-deploymentprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
-  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
-  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
-  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
-  * **volumes** (<code>Array<[Volume](#cdk8s-plus-18-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
+  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
+  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
+  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
+  * **volumes** (<code>Array<[Volume](#cdk8s-plus-17-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
   * **podMetadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  The pod metadata. __*Optional*__
   * **defaultSelector** (<code>boolean</code>)  Automatically allocates a pod selector for this deployment. __*Default*__: true
   * **replicas** (<code>number</code>)  Number of desired pods. __*Default*__: 1
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**containers**🔹 | <code>Array<[Container](#cdk8s-plus-18-container)></code> | The containers belonging to the pod.
-**labelSelector**🔹 | <code>Map<string, string></code> | The labels this deployment will match against in order to select pods.
-**podMetadata**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Provides read/write access to the underlying pod metadata of the resource.
-**replicas**🔹 | <code>number</code> | Number of desired pods.
-**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | The volumes associated with this pod.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
-
-### Methods
-
-
-#### addContainer(container)🔹 <a id="cdk8s-plus-18-deployment-addcontainer"></a>
-
-Add a container to the pod.
-
-```ts
-addContainer(container: ContainerProps): Container
-```
-
-* **container** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  *No description*
-  * **image** (<code>string</code>)  Docker image name. 
-  * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
-  * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
-  * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
-  * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
-  * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
-
-__Returns__:
-* <code>[Container](#cdk8s-plus-18-container)</code>
-
-#### addVolume(volume)🔹 <a id="cdk8s-plus-18-deployment-addvolume"></a>
-
-Add a volume to the pod.
-
-```ts
-addVolume(volume: Volume): void
-```
-
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  *No description*
-
-
-
-
-#### expose(port, options?)🔹 <a id="cdk8s-plus-18-deployment-expose"></a>
-
-Expose a deployment via a service.
-
-This is equivalent to running `kubectl expose deployment <deployment-name>`.
-
-```ts
-expose(port: number, options?: ExposeOptions): Service
-```
-
-* **port** (<code>number</code>)  The port number the service will bind to.
-* **options** (<code>[ExposeOptions](#cdk8s-plus-18-exposeoptions)</code>)  Options to determine details of the service and port exposed.
-  * **name** (<code>string</code>)  The name of the service to expose. __*Default*__: undefined Uses the system generated name.
-  * **protocol** (<code>[Protocol](#cdk8s-plus-18-protocol)</code>)  The IP protocol for this port. __*Default*__: Protocol.TCP
-  * **serviceType** (<code>[ServiceType](#cdk8s-plus-18-servicetype)</code>)  The type of the exposed service. __*Default*__: ClusterIP.
-  * **targetPort** (<code>number</code>)  The port number the service will redirect to. __*Default*__: The port of the first container in the deployment (ie. containers[0].port)
-
-__Returns__:
-* <code>[Service](#cdk8s-plus-18-service)</code>
-
-#### selectByLabel(key, value)🔹 <a id="cdk8s-plus-18-deployment-selectbylabel"></a>
-
-Configure a label selector to this deployment.
-
-Pods that have the label will be selected by deployments configured with this spec.
-
-```ts
-selectByLabel(key: string, value: string): void
-```
-
-* **key** (<code>string</code>)  - The label key.
-* **value** (<code>string</code>)  - The label value.
-
-
-
-
-
-
-## class Duration 🔹 <a id="cdk8s-plus-18-duration"></a>
-
-Represents a length of time.
-
-The amount can be specified either as a literal value (e.g: `10`) which
-cannot be negative.
-
-
-### Methods
-
-
-#### toDays(opts?)🔹 <a id="cdk8s-plus-18-duration-todays"></a>
-
-Return the total number of days in this Duration.
-
-```ts
-toDays(opts?: TimeConversionOptions): number
-```
-
-* **opts** (<code>[TimeConversionOptions](#cdk8s-plus-18-timeconversionoptions)</code>)  *No description*
-  * **integral** (<code>boolean</code>)  If `true`, conversions into a larger time unit (e.g. `Seconds` to `Minutes`) will fail if the result is not an integer. __*Default*__: true
-
-__Returns__:
-* <code>number</code>
-
-#### toHours(opts?)🔹 <a id="cdk8s-plus-18-duration-tohours"></a>
-
-Return the total number of hours in this Duration.
-
-```ts
-toHours(opts?: TimeConversionOptions): number
-```
-
-* **opts** (<code>[TimeConversionOptions](#cdk8s-plus-18-timeconversionoptions)</code>)  *No description*
-  * **integral** (<code>boolean</code>)  If `true`, conversions into a larger time unit (e.g. `Seconds` to `Minutes`) will fail if the result is not an integer. __*Default*__: true
-
-__Returns__:
-* <code>number</code>
-
-#### toHumanString()🔹 <a id="cdk8s-plus-18-duration-tohumanstring"></a>
-
-Turn this duration into a human-readable string.
-
-```ts
-toHumanString(): string
-```
-
-
-__Returns__:
-* <code>string</code>
-
-#### toISOString()⚠️ <a id="cdk8s-plus-18-duration-toisostring"></a>
-
-Return an ISO 8601 representation of this period.
-
-```ts
-toISOString(): string
-```
-
-
-__Returns__:
-* <code>string</code>
-
-#### toIsoString()🔹 <a id="cdk8s-plus-18-duration-toisostring"></a>
-
-Return an ISO 8601 representation of this period.
-
-```ts
-toIsoString(): string
-```
-
-
-__Returns__:
-* <code>string</code>
-
-#### toMilliseconds(opts?)🔹 <a id="cdk8s-plus-18-duration-tomilliseconds"></a>
-
-Return the total number of milliseconds in this Duration.
-
-```ts
-toMilliseconds(opts?: TimeConversionOptions): number
-```
-
-* **opts** (<code>[TimeConversionOptions](#cdk8s-plus-18-timeconversionoptions)</code>)  *No description*
-  * **integral** (<code>boolean</code>)  If `true`, conversions into a larger time unit (e.g. `Seconds` to `Minutes`) will fail if the result is not an integer. __*Default*__: true
-
-__Returns__:
-* <code>number</code>
-
-#### toMinutes(opts?)🔹 <a id="cdk8s-plus-18-duration-tominutes"></a>
-
-Return the total number of minutes in this Duration.
-
-```ts
-toMinutes(opts?: TimeConversionOptions): number
-```
-
-* **opts** (<code>[TimeConversionOptions](#cdk8s-plus-18-timeconversionoptions)</code>)  *No description*
-  * **integral** (<code>boolean</code>)  If `true`, conversions into a larger time unit (e.g. `Seconds` to `Minutes`) will fail if the result is not an integer. __*Default*__: true
-
-__Returns__:
-* <code>number</code>
-
-#### toSeconds(opts?)🔹 <a id="cdk8s-plus-18-duration-toseconds"></a>
-
-Return the total number of seconds in this Duration.
-
-```ts
-toSeconds(opts?: TimeConversionOptions): number
-```
-
-* **opts** (<code>[TimeConversionOptions](#cdk8s-plus-18-timeconversionoptions)</code>)  *No description*
-  * **integral** (<code>boolean</code>)  If `true`, conversions into a larger time unit (e.g. `Seconds` to `Minutes`) will fail if the result is not an integer. __*Default*__: true
-
-__Returns__:
-* <code>number</code>
-
-#### *static* days(amount)🔹 <a id="cdk8s-plus-18-duration-days"></a>
-
-Create a Duration representing an amount of days.
-
-```ts
-static days(amount: number): Duration
-```
-
-* **amount** (<code>number</code>)  the amount of Days the `Duration` will represent.
-
-__Returns__:
-* <code>[Duration](#cdk8s-plus-18-duration)</code>
-
-#### *static* hours(amount)🔹 <a id="cdk8s-plus-18-duration-hours"></a>
-
-Create a Duration representing an amount of hours.
-
-```ts
-static hours(amount: number): Duration
-```
-
-* **amount** (<code>number</code>)  the amount of Hours the `Duration` will represent.
-
-__Returns__:
-* <code>[Duration](#cdk8s-plus-18-duration)</code>
-
-#### *static* millis(amount)🔹 <a id="cdk8s-plus-18-duration-millis"></a>
-
-Create a Duration representing an amount of milliseconds.
-
-```ts
-static millis(amount: number): Duration
-```
-
-* **amount** (<code>number</code>)  the amount of Milliseconds the `Duration` will represent.
-
-__Returns__:
-* <code>[Duration](#cdk8s-plus-18-duration)</code>
-
-#### *static* minutes(amount)🔹 <a id="cdk8s-plus-18-duration-minutes"></a>
-
-Create a Duration representing an amount of minutes.
-
-```ts
-static minutes(amount: number): Duration
-```
-
-* **amount** (<code>number</code>)  the amount of Minutes the `Duration` will represent.
-
-__Returns__:
-* <code>[Duration](#cdk8s-plus-18-duration)</code>
-
-#### *static* parse(duration)🔹 <a id="cdk8s-plus-18-duration-parse"></a>
-
-Parse a period formatted according to the ISO 8601 standard.
-
-```ts
-static parse(duration: string): Duration
-```
-
-* **duration** (<code>string</code>)  an ISO-formtted duration to be parsed.
-
-__Returns__:
-* <code>[Duration](#cdk8s-plus-18-duration)</code>
-
-#### *static* seconds(amount)🔹 <a id="cdk8s-plus-18-duration-seconds"></a>
-
-Create a Duration representing an amount of seconds.
-
-```ts
-static seconds(amount: number): Duration
-```
-
-* **amount** (<code>number</code>)  the amount of Seconds the `Duration` will represent.
-
-__Returns__:
-* <code>[Duration](#cdk8s-plus-18-duration)</code>
 
 
 
@@ -879,8 +442,8 @@ Deleting a Job will clean up the Pods it created. A simple case is to create one
 The Job object will start a new Pod if the first Pod fails or is deleted (for example due to a node hardware failure or a node reboot).
 You can also use a Job to run multiple Pods in parallel.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource), [IPodTemplate](#cdk8s-plus-18-ipodtemplate), [IPodSpec](#cdk8s-plus-18-ipodspec)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource), [IPodTemplate](#cdk8s-plus-17-ipodtemplate), [IPodSpec](#cdk8s-plus-17-ipodspec)
+__Extends__: [Job](#cdk8s-plus-17-job)
 
 ### Initializer
 
@@ -893,69 +456,14 @@ new Job(scope: Construct, id: string, props?: JobProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[JobProps](#cdk8s-plus-18-jobprops)</code>)  *No description*
+* **props** (<code>[JobProps](#cdk8s-plus-17-jobprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
-  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
-  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
-  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
-  * **volumes** (<code>Array<[Volume](#cdk8s-plus-18-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
+  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
+  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
+  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
+  * **volumes** (<code>Array<[Volume](#cdk8s-plus-17-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
   * **podMetadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  The pod metadata. __*Optional*__
-  * **ttlAfterFinished** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  Limits the lifetime of a Job that has finished execution (either Complete or Failed). __*Default*__: If this field is unset, the Job won't be automatically deleted.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**containers**🔹 | <code>Array<[Container](#cdk8s-plus-18-container)></code> | The containers belonging to the pod.
-**podMetadata**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Provides read/write access to the underlying pod metadata of the resource.
-**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | The volumes associated with this pod.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
-**ttlAfterFinished**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | TTL before the job is deleted after it is finished.<br/>__*Optional*__
-
-### Methods
-
-
-#### addContainer(container)🔹 <a id="cdk8s-plus-18-job-addcontainer"></a>
-
-Add a container to the pod.
-
-```ts
-addContainer(container: ContainerProps): Container
-```
-
-* **container** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  *No description*
-  * **image** (<code>string</code>)  Docker image name. 
-  * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
-  * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
-  * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
-  * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
-  * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
-
-__Returns__:
-* <code>[Container](#cdk8s-plus-18-container)</code>
-
-#### addVolume(volume)🔹 <a id="cdk8s-plus-18-job-addvolume"></a>
-
-Add a volume to the pod.
-
-```ts
-addVolume(volume: Volume): void
-```
-
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  *No description*
-
-
+  * **ttlAfterFinished** (<code>[Duration](#cdk8s-duration)</code>)  Limits the lifetime of a Job that has finished execution (either Complete or Failed). __*Default*__: If this field is unset, the Job won't be automatically deleted.
 
 
 
@@ -967,8 +475,8 @@ Pod is a collection of containers that can run on a host.
 This resource is
 created by clients and scheduled onto hosts.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource), [IPodSpec](#cdk8s-plus-18-ipodspec)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource), [IPodSpec](#cdk8s-plus-17-ipodspec)
+__Extends__: [Pod](#cdk8s-plus-17-pod)
 
 ### Initializer
 
@@ -981,65 +489,12 @@ new Pod(scope: Construct, id: string, props?: PodProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[PodProps](#cdk8s-plus-18-podprops)</code>)  *No description*
+* **props** (<code>[PodProps](#cdk8s-plus-17-podprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
-  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
-  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
-  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
-  * **volumes** (<code>Array<[Volume](#cdk8s-plus-18-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**containers**🔹 | <code>Array<[Container](#cdk8s-plus-18-container)></code> | The containers belonging to the pod.
-**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | The volumes associated with this pod.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
-
-### Methods
-
-
-#### addContainer(container)🔹 <a id="cdk8s-plus-18-pod-addcontainer"></a>
-
-Add a container to the pod.
-
-```ts
-addContainer(container: ContainerProps): Container
-```
-
-* **container** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  *No description*
-  * **image** (<code>string</code>)  Docker image name. 
-  * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
-  * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
-  * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
-  * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
-  * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
-
-__Returns__:
-* <code>[Container](#cdk8s-plus-18-container)</code>
-
-#### addVolume(volume)🔹 <a id="cdk8s-plus-18-pod-addvolume"></a>
-
-Add a volume to the pod.
-
-```ts
-addVolume(volume: Volume): void
-```
-
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  *No description*
-
-
+  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
+  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
+  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
+  * **volumes** (<code>Array<[Volume](#cdk8s-plus-17-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
 
 
 
@@ -1048,7 +503,8 @@ addVolume(volume: Volume): void
 
 Provides read/write capabilities ontop of a `PodSpecProps`.
 
-__Implements__: [IPodSpec](#cdk8s-plus-18-ipodspec)
+__Implements__: [IPodSpec](#cdk8s-plus-17-ipodspec)
+__Extends__: [PodSpec](#cdk8s-plus-17-podspec)
 
 ### Initializer
 
@@ -1059,63 +515,11 @@ __Implements__: [IPodSpec](#cdk8s-plus-18-ipodspec)
 new PodSpec(props?: PodSpecProps)
 ```
 
-* **props** (<code>[PodSpecProps](#cdk8s-plus-18-podspecprops)</code>)  *No description*
-  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
-  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
-  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
-  * **volumes** (<code>Array<[Volume](#cdk8s-plus-18-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**containers**🔹 | <code>Array<[Container](#cdk8s-plus-18-container)></code> | The containers belonging to the pod.
-**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | The volumes associated with this pod.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
-
-### Methods
-
-
-#### addContainer(container)🔹 <a id="cdk8s-plus-18-podspec-addcontainer"></a>
-
-Add a container to the pod.
-
-```ts
-addContainer(container: ContainerProps): Container
-```
-
-* **container** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  *No description*
-  * **image** (<code>string</code>)  Docker image name. 
-  * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
-  * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
-  * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
-  * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
-  * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
-
-__Returns__:
-* <code>[Container](#cdk8s-plus-18-container)</code>
-
-#### addVolume(volume)🔹 <a id="cdk8s-plus-18-podspec-addvolume"></a>
-
-Add a volume to the pod.
-
-```ts
-addVolume(volume: Volume): void
-```
-
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  *No description*
-
-
+* **props** (<code>[PodSpecProps](#cdk8s-plus-17-podspecprops)</code>)  *No description*
+  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
+  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
+  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
+  * **volumes** (<code>Array<[Volume](#cdk8s-plus-17-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
 
 
 
@@ -1124,8 +528,8 @@ addVolume(volume: Volume): void
 
 Provides read/write capabilities ontop of a `PodTemplateProps`.
 
-__Implements__: [IPodSpec](#cdk8s-plus-18-ipodspec), [IPodTemplate](#cdk8s-plus-18-ipodtemplate), [IPodSpec](#cdk8s-plus-18-ipodspec)
-__Extends__: [PodSpec](#cdk8s-plus-18-podspec)
+__Implements__: [IPodSpec](#cdk8s-plus-17-ipodspec), [IPodTemplate](#cdk8s-plus-17-ipodtemplate), [IPodSpec](#cdk8s-plus-17-ipodspec)
+__Extends__: [PodTemplate](#cdk8s-plus-17-podtemplate)
 
 ### Initializer
 
@@ -1136,21 +540,13 @@ __Extends__: [PodSpec](#cdk8s-plus-18-podspec)
 new PodTemplate(props?: PodTemplateProps)
 ```
 
-* **props** (<code>[PodTemplateProps](#cdk8s-plus-18-podtemplateprops)</code>)  *No description*
-  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
-  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
-  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
-  * **volumes** (<code>Array<[Volume](#cdk8s-plus-18-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
+* **props** (<code>[PodTemplateProps](#cdk8s-plus-17-podtemplateprops)</code>)  *No description*
+  * **containers** (<code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code>)  List of containers belonging to the pod. __*Default*__: No containers. Note that a pod spec must include at least one container.
+  * **restartPolicy** (<code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code>)  Restart policy for all containers within the pod. __*Default*__: RestartPolicy.ALWAYS
+  * **serviceAccount** (<code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code>)  A service account provides an identity for processes that run in a Pod. __*Default*__: No service account.
+  * **volumes** (<code>Array<[Volume](#cdk8s-plus-17-volume)></code>)  List of volumes that can be mounted by containers belonging to the pod. __*Default*__: No volumes.
   * **podMetadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  The pod metadata. __*Optional*__
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**podMetadata**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Provides read/write access to the underlying pod metadata of the resource.
 
 
 
@@ -1158,6 +554,7 @@ Name | Type | Description
 
 Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
 
+__Extends__: [Probe](#cdk8s-plus-17-probe)
 
 ### Initializer
 
@@ -1170,48 +567,6 @@ new Probe()
 
 
 
-### Methods
-
-
-#### *static* fromCommand(command, options?)🔹 <a id="cdk8s-plus-18-probe-fromcommand"></a>
-
-Defines a probe based on a command which is executed within the container.
-
-```ts
-static fromCommand(command: Array<string>, options?: CommandProbeOptions): Probe
-```
-
-* **command** (<code>Array<string></code>)  The command to execute.
-* **options** (<code>[CommandProbeOptions](#cdk8s-plus-18-commandprobeoptions)</code>)  Options.
-  * **failureThreshold** (<code>number</code>)  Minimum consecutive failures for the probe to be considered failed after having succeeded. __*Default*__: 3
-  * **initialDelaySeconds** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  Number of seconds after the container has started before liveness probes are initiated. __*Default*__: immediate
-  * **periodSeconds** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  How often (in seconds) to perform the probe. __*Default*__: Duration.seconds(10) Minimum value is 1.
-  * **successThreshold** (<code>number</code>)  Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. __*Default*__: 1 Must be 1 for liveness and startup. Minimum value is 1.
-  * **timeoutSeconds** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  Number of seconds after which the probe times out. __*Default*__: Duration.seconds(1)
-
-__Returns__:
-* <code>[Probe](#cdk8s-plus-18-probe)</code>
-
-#### *static* fromHttpGet(path, options?)🔹 <a id="cdk8s-plus-18-probe-fromhttpget"></a>
-
-Defines a probe based on an HTTP GET request to the IP address of the container.
-
-```ts
-static fromHttpGet(path: string, options?: HttpGetProbeOptions): Probe
-```
-
-* **path** (<code>string</code>)  The URL path to hit.
-* **options** (<code>[HttpGetProbeOptions](#cdk8s-plus-18-httpgetprobeoptions)</code>)  Options.
-  * **failureThreshold** (<code>number</code>)  Minimum consecutive failures for the probe to be considered failed after having succeeded. __*Default*__: 3
-  * **initialDelaySeconds** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  Number of seconds after the container has started before liveness probes are initiated. __*Default*__: immediate
-  * **periodSeconds** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  How often (in seconds) to perform the probe. __*Default*__: Duration.seconds(10) Minimum value is 1.
-  * **successThreshold** (<code>number</code>)  Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. __*Default*__: 1 Must be 1 for liveness and startup. Minimum value is 1.
-  * **timeoutSeconds** (<code>[Duration](#cdk8s-plus-18-duration)</code>)  Number of seconds after which the probe times out. __*Default*__: Duration.seconds(1)
-  * **port** (<code>number</code>)  The TCP port to use when sending the GET request. __*Default*__: defaults to `container.port`.
-
-__Returns__:
-* <code>[Probe](#cdk8s-plus-18-probe)</code>
-
 
 
 ## class Resource 🔹 <a id="cdk8s-plus-18-resource"></a>
@@ -1223,7 +578,7 @@ resource.
 
 __Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource)
 __Extends__: [Construct](#constructs-construct)
-__Implemented by__: [ConfigMap](#cdk8s-plus-18-configmap), [Deployment](#cdk8s-plus-18-deployment), [Ingress](#cdk8s-plus-18-ingress), [Job](#cdk8s-plus-18-job), [Pod](#cdk8s-plus-18-pod), [Secret](#cdk8s-plus-18-secret), [Service](#cdk8s-plus-18-service), [ServiceAccount](#cdk8s-plus-18-serviceaccount)
+__Implemented by__: [Ingress](#cdk8s-plus-18-ingress)
 
 ### Initializer
 
@@ -1260,8 +615,8 @@ Storing confidential information in a
 Secret is safer and more flexible than putting it verbatim in a Pod
 definition or in a container image.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource), [ISecret](#cdk8s-plus-18-isecret), [IResource](#cdk8s-plus-18-iresource)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource), [ISecret](#cdk8s-plus-17-isecret), [IResource](#cdk8s-plus-17-iresource)
+__Extends__: [Secret](#cdk8s-plus-17-secret)
 
 ### Initializer
 
@@ -1274,61 +629,10 @@ new Secret(scope: Construct, id: string, props?: SecretProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[SecretProps](#cdk8s-plus-18-secretprops)</code>)  *No description*
+* **props** (<code>[SecretProps](#cdk8s-plus-17-secretprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
   * **stringData** (<code>Map<string, string></code>)  stringData allows specifying non-binary secret data in string form. __*Optional*__
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-
-### Methods
-
-
-#### addStringData(key, value)🔹 <a id="cdk8s-plus-18-secret-addstringdata"></a>
-
-Adds a string data field to the secert.
-
-```ts
-addStringData(key: string, value: string): void
-```
-
-* **key** (<code>string</code>)  Key.
-* **value** (<code>string</code>)  Value.
-
-
-
-
-#### getStringData(key)🔹 <a id="cdk8s-plus-18-secret-getstringdata"></a>
-
-Gets a string data by key or undefined.
-
-```ts
-getStringData(key: string): string
-```
-
-* **key** (<code>string</code>)  Key.
-
-__Returns__:
-* <code>string</code>
-
-#### *static* fromSecretName(name)🔹 <a id="cdk8s-plus-18-secret-fromsecretname"></a>
-
-Imports a secret from the cluster as a reference.
-
-```ts
-static fromSecretName(name: string): ISecret
-```
-
-* **name** (<code>string</code>)  The name of the secret to reference.
-
-__Returns__:
-* <code>[ISecret](#cdk8s-plus-18-isecret)</code>
 
 
 
@@ -1348,8 +652,8 @@ If you're able to use Kubernetes APIs for service discovery in your application,
 that get updated whenever the set of Pods in a Service changes. For non-native applications, Kubernetes offers ways to place a network port
 or load balancer in between your application and the backend Pods.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource)
+__Extends__: [Service](#cdk8s-plus-17-service)
 
 ### Initializer
 
@@ -1362,84 +666,12 @@ new Service(scope: Construct, id: string, props?: ServiceProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[ServiceProps](#cdk8s-plus-18-serviceprops)</code>)  *No description*
+* **props** (<code>[ServiceProps](#cdk8s-plus-17-serviceprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
   * **clusterIP** (<code>string</code>)  The IP address of the service and is usually assigned randomly by the master. __*Default*__: Automatically assigned.
   * **externalIPs** (<code>Array<string></code>)  A list of IP addresses for which nodes in the cluster will also accept traffic for this service. __*Default*__: No external IPs.
-  * **ports** (<code>Array<[ServicePort](#cdk8s-plus-18-serviceport)></code>)  The port exposed by this service. __*Optional*__
-  * **type** (<code>[ServiceType](#cdk8s-plus-18-servicetype)</code>)  Determines how the Service is exposed. __*Default*__: ServiceType.ClusterIP
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**ports**🔹 | <code>Array<[ServicePort](#cdk8s-plus-18-serviceport)></code> | Ports for this service.
-**selector**🔹 | <code>Map<string, string></code> | Returns the labels which are used to select pods for this service.
-**type**🔹 | <code>[ServiceType](#cdk8s-plus-18-servicetype)</code> | Determines how the Service is exposed.
-**clusterIP**?🔹 | <code>string</code> | The IP address of the service and is usually assigned randomly by the master.<br/>__*Optional*__
-
-### Methods
-
-
-#### addDeployment(deployment, port, options?)🔹 <a id="cdk8s-plus-18-service-adddeployment"></a>
-
-Associate a deployment to this service.
-
-If not targetPort is specific in the portOptions, then requests will be routed
-to the port exposed by the first container in the deployment's pods.
-The deployment's `labelSelector` will be used to select pods.
-
-```ts
-addDeployment(deployment: Deployment, port: number, options?: ServicePortOptions): void
-```
-
-* **deployment** (<code>[Deployment](#cdk8s-plus-18-deployment)</code>)  The deployment to expose.
-* **port** (<code>number</code>)  The external port.
-* **options** (<code>[ServicePortOptions](#cdk8s-plus-18-serviceportoptions)</code>)  Optional settings for the port.
-  * **name** (<code>string</code>)  The name of this port within the service. __*Optional*__
-  * **nodePort** (<code>number</code>)  The port on each node on which this service is exposed when type=NodePort or LoadBalancer. __*Default*__: to auto-allocate a port if the ServiceType of this Service requires one.
-  * **protocol** (<code>[Protocol](#cdk8s-plus-18-protocol)</code>)  The IP protocol for this port. __*Default*__: Protocol.TCP
-  * **targetPort** (<code>number</code>)  The port number the service will redirect to. __*Default*__: The value of `port` will be used.
-
-
-
-
-#### addSelector(label, value)🔹 <a id="cdk8s-plus-18-service-addselector"></a>
-
-Services defined using this spec will select pods according the provided label.
-
-```ts
-addSelector(label: string, value: string): void
-```
-
-* **label** (<code>string</code>)  The label key.
-* **value** (<code>string</code>)  The label value.
-
-
-
-
-#### serve(port, options?)🔹 <a id="cdk8s-plus-18-service-serve"></a>
-
-Configure a port the service will bind to.
-
-This method can be called multiple times.
-
-```ts
-serve(port: number, options?: ServicePortOptions): void
-```
-
-* **port** (<code>number</code>)  The port definition.
-* **options** (<code>[ServicePortOptions](#cdk8s-plus-18-serviceportoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  The name of this port within the service. __*Optional*__
-  * **nodePort** (<code>number</code>)  The port on each node on which this service is exposed when type=NodePort or LoadBalancer. __*Default*__: to auto-allocate a port if the ServiceType of this Service requires one.
-  * **protocol** (<code>[Protocol](#cdk8s-plus-18-protocol)</code>)  The IP protocol for this port. __*Default*__: Protocol.TCP
-  * **targetPort** (<code>number</code>)  The port number the service will redirect to. __*Default*__: The value of `port` will be used.
-
-
+  * **ports** (<code>Array<[ServicePort](#cdk8s-plus-17-serviceport)></code>)  The port exposed by this service. __*Optional*__
+  * **type** (<code>[ServiceType](#cdk8s-plus-17-servicetype)</code>)  Determines how the Service is exposed. __*Default*__: ServiceType.ClusterIP
 
 
 
@@ -1455,8 +687,8 @@ cluster). Processes in containers inside pods can also contact the apiserver.
 When they do, they are authenticated as a particular Service Account (for
 example, default).
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-18-iresource), [IServiceAccount](#cdk8s-plus-18-iserviceaccount), [IResource](#cdk8s-plus-18-iresource)
-__Extends__: [Resource](#cdk8s-plus-18-resource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IResource](#cdk8s-plus-17-iresource), [IServiceAccount](#cdk8s-plus-17-iserviceaccount), [IResource](#cdk8s-plus-17-iresource)
+__Extends__: [ServiceAccount](#cdk8s-plus-17-serviceaccount)
 
 ### Initializer
 
@@ -1469,208 +701,10 @@ new ServiceAccount(scope: Construct, id: string, props?: ServiceAccountProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[ServiceAccountProps](#cdk8s-plus-18-serviceaccountprops)</code>)  *No description*
+* **props** (<code>[ServiceAccountProps](#cdk8s-plus-17-serviceaccountprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
-  * **secrets** (<code>Array<[ISecret](#cdk8s-plus-18-isecret)></code>)  List of secrets allowed to be used by pods running using this ServiceAccount. __*Optional*__
+  * **secrets** (<code>Array<[ISecret](#cdk8s-plus-17-isecret)></code>)  List of secrets allowed to be used by pods running using this ServiceAccount. __*Optional*__
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**apiObject**🔹 | <code>[ApiObject](#cdk8s-apiobject)</code> | The underlying cdk8s API object.
-**secrets**🔹 | <code>Array<[ISecret](#cdk8s-plus-18-isecret)></code> | List of secrets allowed to be used by pods running using this service account.
-
-### Methods
-
-
-#### addSecret(secret)🔹 <a id="cdk8s-plus-18-serviceaccount-addsecret"></a>
-
-Allow a secret to be accessed by pods using this service account.
-
-```ts
-addSecret(secret: ISecret): void
-```
-
-* **secret** (<code>[ISecret](#cdk8s-plus-18-isecret)</code>)  The secret.
-
-
-
-
-#### *static* fromServiceAccountName(name)🔹 <a id="cdk8s-plus-18-serviceaccount-fromserviceaccountname"></a>
-
-Imports a service account from the cluster as a reference.
-
-```ts
-static fromServiceAccountName(name: string): IServiceAccount
-```
-
-* **name** (<code>string</code>)  The name of the service account resource.
-
-__Returns__:
-* <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code>
-
-
-
-## class Size 🔹 <a id="cdk8s-plus-18-size"></a>
-
-Represents the amount of digital storage.
-
-The amount can be specified either as a literal value (e.g: `10`) which
-cannot be negative.
-
-When the amount is passed as a token, unit conversion is not possible.
-
-
-### Methods
-
-
-#### toGibibytes(opts?)🔹 <a id="cdk8s-plus-18-size-togibibytes"></a>
-
-Return this storage as a total number of gibibytes.
-
-```ts
-toGibibytes(opts?: SizeConversionOptions): number
-```
-
-* **opts** (<code>[SizeConversionOptions](#cdk8s-plus-18-sizeconversionoptions)</code>)  *No description*
-  * **rounding** (<code>[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)</code>)  How conversions should behave when it encounters a non-integer result. __*Default*__: SizeRoundingBehavior.FAIL
-
-__Returns__:
-* <code>number</code>
-
-#### toKibibytes(opts?)🔹 <a id="cdk8s-plus-18-size-tokibibytes"></a>
-
-Return this storage as a total number of kibibytes.
-
-```ts
-toKibibytes(opts?: SizeConversionOptions): number
-```
-
-* **opts** (<code>[SizeConversionOptions](#cdk8s-plus-18-sizeconversionoptions)</code>)  *No description*
-  * **rounding** (<code>[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)</code>)  How conversions should behave when it encounters a non-integer result. __*Default*__: SizeRoundingBehavior.FAIL
-
-__Returns__:
-* <code>number</code>
-
-#### toMebibytes(opts?)🔹 <a id="cdk8s-plus-18-size-tomebibytes"></a>
-
-Return this storage as a total number of mebibytes.
-
-```ts
-toMebibytes(opts?: SizeConversionOptions): number
-```
-
-* **opts** (<code>[SizeConversionOptions](#cdk8s-plus-18-sizeconversionoptions)</code>)  *No description*
-  * **rounding** (<code>[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)</code>)  How conversions should behave when it encounters a non-integer result. __*Default*__: SizeRoundingBehavior.FAIL
-
-__Returns__:
-* <code>number</code>
-
-#### toPebibytes(opts?)🔹 <a id="cdk8s-plus-18-size-topebibytes"></a>
-
-Return this storage as a total number of pebibytes.
-
-```ts
-toPebibytes(opts?: SizeConversionOptions): number
-```
-
-* **opts** (<code>[SizeConversionOptions](#cdk8s-plus-18-sizeconversionoptions)</code>)  *No description*
-  * **rounding** (<code>[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)</code>)  How conversions should behave when it encounters a non-integer result. __*Default*__: SizeRoundingBehavior.FAIL
-
-__Returns__:
-* <code>number</code>
-
-#### toTebibytes(opts?)🔹 <a id="cdk8s-plus-18-size-totebibytes"></a>
-
-Return this storage as a total number of tebibytes.
-
-```ts
-toTebibytes(opts?: SizeConversionOptions): number
-```
-
-* **opts** (<code>[SizeConversionOptions](#cdk8s-plus-18-sizeconversionoptions)</code>)  *No description*
-  * **rounding** (<code>[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)</code>)  How conversions should behave when it encounters a non-integer result. __*Default*__: SizeRoundingBehavior.FAIL
-
-__Returns__:
-* <code>number</code>
-
-#### *static* gibibytes(amount)🔹 <a id="cdk8s-plus-18-size-gibibytes"></a>
-
-Create a Storage representing an amount gibibytes.
-
-1 GiB = 1024 MiB
-
-```ts
-static gibibytes(amount: number): Size
-```
-
-* **amount** (<code>number</code>)  *No description*
-
-__Returns__:
-* <code>[Size](#cdk8s-plus-18-size)</code>
-
-#### *static* kibibytes(amount)🔹 <a id="cdk8s-plus-18-size-kibibytes"></a>
-
-Create a Storage representing an amount kibibytes.
-
-1 KiB = 1024 bytes
-
-```ts
-static kibibytes(amount: number): Size
-```
-
-* **amount** (<code>number</code>)  *No description*
-
-__Returns__:
-* <code>[Size](#cdk8s-plus-18-size)</code>
-
-#### *static* mebibytes(amount)🔹 <a id="cdk8s-plus-18-size-mebibytes"></a>
-
-Create a Storage representing an amount mebibytes.
-
-1 MiB = 1024 KiB
-
-```ts
-static mebibytes(amount: number): Size
-```
-
-* **amount** (<code>number</code>)  *No description*
-
-__Returns__:
-* <code>[Size](#cdk8s-plus-18-size)</code>
-
-#### *static* pebibyte(amount)🔹 <a id="cdk8s-plus-18-size-pebibyte"></a>
-
-Create a Storage representing an amount pebibytes.
-
-1 PiB = 1024 TiB
-
-```ts
-static pebibyte(amount: number): Size
-```
-
-* **amount** (<code>number</code>)  *No description*
-
-__Returns__:
-* <code>[Size](#cdk8s-plus-18-size)</code>
-
-#### *static* tebibytes(amount)🔹 <a id="cdk8s-plus-18-size-tebibytes"></a>
-
-Create a Storage representing an amount tebibytes.
-
-1 TiB = 1024 GiB
-
-```ts
-static tebibytes(amount: number): Size
-```
-
-* **amount** (<code>number</code>)  *No description*
-
-__Returns__:
-* <code>[Size](#cdk8s-plus-18-size)</code>
 
 
 
@@ -1707,6 +741,7 @@ image and volumes. The Docker image is at the root of the filesystem
 hierarchy, and any volumes are mounted at the specified paths within the
 image. Volumes can not mount onto other volumes
 
+__Extends__: [Volume](#cdk8s-plus-17-volume)
 
 ### Initializer
 
@@ -1720,66 +755,6 @@ new Volume(name: string, config: any)
 * **name** (<code>string</code>)  *No description*
 * **config** (<code>any</code>)  *No description*
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**name**🔹 | <code>string</code> | <span></span>
-
-### Methods
-
-
-#### *static* fromConfigMap(configMap, options?)🔹 <a id="cdk8s-plus-18-volume-fromconfigmap"></a>
-
-Populate the volume from a ConfigMap.
-
-The configMap resource provides a way to inject configuration data into
-Pods. The data stored in a ConfigMap object can be referenced in a volume
-of type configMap and then consumed by containerized applications running
-in a Pod.
-
-When referencing a configMap object, you can simply provide its name in the
-volume to reference it. You can also customize the path to use for a
-specific entry in the ConfigMap.
-
-```ts
-static fromConfigMap(configMap: IConfigMap, options?: ConfigMapVolumeOptions): Volume
-```
-
-* **configMap** (<code>[IConfigMap](#cdk8s-plus-18-iconfigmap)</code>)  The config map to use to populate the volume.
-* **options** (<code>[ConfigMapVolumeOptions](#cdk8s-plus-18-configmapvolumeoptions)</code>)  Options.
-  * **defaultMode** (<code>number</code>)  Mode bits to use on created files by default. __*Default*__: 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-  * **items** (<code>Map<string, [PathMapping](#cdk8s-plus-18-pathmapping)></code>)  If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. __*Default*__: no mapping
-  * **name** (<code>string</code>)  The volume name. __*Default*__: auto-generated
-  * **optional** (<code>boolean</code>)  Specify whether the ConfigMap or its keys must be defined. __*Default*__: undocumented
-
-__Returns__:
-* <code>[Volume](#cdk8s-plus-18-volume)</code>
-
-#### *static* fromEmptyDir(name, options?)🔹 <a id="cdk8s-plus-18-volume-fromemptydir"></a>
-
-An emptyDir volume is first created when a Pod is assigned to a Node, and exists as long as that Pod is running on that node.
-
-As the name says, it is
-initially empty. Containers in the Pod can all read and write the same
-files in the emptyDir volume, though that volume can be mounted at the same
-or different paths in each Container. When a Pod is removed from a node for
-any reason, the data in the emptyDir is deleted forever.
-
-```ts
-static fromEmptyDir(name: string, options?: EmptyDirVolumeOptions): Volume
-```
-
-* **name** (<code>string</code>)  *No description*
-* **options** (<code>[EmptyDirVolumeOptions](#cdk8s-plus-18-emptydirvolumeoptions)</code>)  - Additional options.
-  * **medium** (<code>[EmptyDirMedium](#cdk8s-plus-18-emptydirmedium)</code>)  By default, emptyDir volumes are stored on whatever medium is backing the node - that might be disk or SSD or network storage, depending on your environment. __*Default*__: EmptyDirMedium.DEFAULT
-  * **sizeLimit** (<code>[Size](#cdk8s-plus-18-size)</code>)  Total amount of local storage required for this EmptyDir volume. __*Default*__: limit is undefined
-
-__Returns__:
-* <code>[Volume](#cdk8s-plus-18-volume)</code>
 
 
 
@@ -1807,10 +782,10 @@ Options for `Probe.fromCommand()`.
 Name | Type | Description 
 -----|------|-------------
 **failureThreshold**?🔹 | <code>number</code> | Minimum consecutive failures for the probe to be considered failed after having succeeded.<br/>__*Default*__: 3
-**initialDelaySeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Number of seconds after the container has started before liveness probes are initiated.<br/>__*Default*__: immediate
-**periodSeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | How often (in seconds) to perform the probe.<br/>__*Default*__: Duration.seconds(10) Minimum value is 1.
+**initialDelaySeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Number of seconds after the container has started before liveness probes are initiated.<br/>__*Default*__: immediate
+**periodSeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | How often (in seconds) to perform the probe.<br/>__*Default*__: Duration.seconds(10) Minimum value is 1.
 **successThreshold**?🔹 | <code>number</code> | Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.<br/>__*Default*__: 1 Must be 1 for liveness and startup. Minimum value is 1.
-**timeoutSeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Number of seconds after which the probe times out.<br/>__*Default*__: Duration.seconds(1)
+**timeoutSeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Number of seconds after which the probe times out.<br/>__*Default*__: Duration.seconds(1)
 
 
 
@@ -1839,7 +814,7 @@ Options for the ConfigMap-based volume.
 Name | Type | Description 
 -----|------|-------------
 **defaultMode**?🔹 | <code>number</code> | Mode bits to use on created files by default.<br/>__*Default*__: 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-**items**?🔹 | <code>Map<string, [PathMapping](#cdk8s-plus-18-pathmapping)></code> | If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value.<br/>__*Default*__: no mapping
+**items**?🔹 | <code>Map<string, [PathMapping](#cdk8s-plus-17-pathmapping)></code> | If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value.<br/>__*Default*__: no mapping
 **name**?🔹 | <code>string</code> | The volume name.<br/>__*Default*__: auto-generated
 **optional**?🔹 | <code>boolean</code> | Specify whether the ConfigMap or its keys must be defined.<br/>__*Default*__: undocumented
 
@@ -1857,14 +832,14 @@ Name | Type | Description
 **image**🔹 | <code>string</code> | Docker image name.
 **args**?🔹 | <code>Array<string></code> | Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided.<br/>__*Default*__: []
 **command**?🔹 | <code>Array<string></code> | Entrypoint array.<br/>__*Default*__: The docker image's ENTRYPOINT.
-**env**?🔹 | <code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code> | List of environment variables to set in the container.<br/>__*Default*__: No environment variables.
-**imagePullPolicy**?🔹 | <code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code> | Image pull policy for this container.<br/>__*Default*__: ImagePullPolicy.ALWAYS
-**liveness**?🔹 | <code>[Probe](#cdk8s-plus-18-probe)</code> | Periodic probe of container liveness.<br/>__*Default*__: no liveness probe is defined
+**env**?🔹 | <code>Map<string, [EnvValue](#cdk8s-plus-17-envvalue)></code> | List of environment variables to set in the container.<br/>__*Default*__: No environment variables.
+**imagePullPolicy**?🔹 | <code>[ImagePullPolicy](#cdk8s-plus-17-imagepullpolicy)</code> | Image pull policy for this container.<br/>__*Default*__: ImagePullPolicy.ALWAYS
+**liveness**?🔹 | <code>[Probe](#cdk8s-plus-17-probe)</code> | Periodic probe of container liveness.<br/>__*Default*__: no liveness probe is defined
 **name**?🔹 | <code>string</code> | Name of the container specified as a DNS_LABEL.<br/>__*Default*__: 'main'
 **port**?🔹 | <code>number</code> | Number of port to expose on the pod's IP address.<br/>__*Default*__: No port is exposed.
-**readiness**?🔹 | <code>[Probe](#cdk8s-plus-18-probe)</code> | Determines when the container is ready to serve traffic.<br/>__*Default*__: no readiness probe is defined
-**startup**?🔹 | <code>[Probe](#cdk8s-plus-18-probe)</code> | StartupProbe indicates that the Pod has successfully initialized.<br/>__*Default*__: no startup probe is defined.
-**volumeMounts**?🔹 | <code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code> | Pod volumes to mount into the container's filesystem.<br/>__*Optional*__
+**readiness**?🔹 | <code>[Probe](#cdk8s-plus-17-probe)</code> | Determines when the container is ready to serve traffic.<br/>__*Default*__: no readiness probe is defined
+**startup**?🔹 | <code>[Probe](#cdk8s-plus-17-probe)</code> | StartupProbe indicates that the Pod has successfully initialized.<br/>__*Default*__: no startup probe is defined.
+**volumeMounts**?🔹 | <code>Array<[VolumeMount](#cdk8s-plus-17-volumemount)></code> | Pod volumes to mount into the container's filesystem.<br/>__*Optional*__
 **workingDir**?🔹 | <code>string</code> | Container's working directory.<br/>__*Default*__: The container runtime's default.
 
 
@@ -1878,14 +853,14 @@ Properties for initialization of `Deployment`.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
+**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
 **defaultSelector**?🔹 | <code>boolean</code> | Automatically allocates a pod selector for this deployment.<br/>__*Default*__: true
 **metadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Metadata that all persisted resources must have, which includes all objects users must create.<br/>__*Optional*__
 **podMetadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | The pod metadata.<br/>__*Optional*__
 **replicas**?🔹 | <code>number</code> | Number of desired pods.<br/>__*Default*__: 1
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
-**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
+**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
 
 
 
@@ -1898,8 +873,8 @@ Options for volumes populated with an empty directory.
 
 Name | Type | Description 
 -----|------|-------------
-**medium**?🔹 | <code>[EmptyDirMedium](#cdk8s-plus-18-emptydirmedium)</code> | By default, emptyDir volumes are stored on whatever medium is backing the node - that might be disk or SSD or network storage, depending on your environment.<br/>__*Default*__: EmptyDirMedium.DEFAULT
-**sizeLimit**?🔹 | <code>[Size](#cdk8s-plus-18-size)</code> | Total amount of local storage required for this EmptyDir volume.<br/>__*Default*__: limit is undefined
+**medium**?🔹 | <code>[EmptyDirMedium](#cdk8s-plus-17-emptydirmedium)</code> | By default, emptyDir volumes are stored on whatever medium is backing the node - that might be disk or SSD or network storage, depending on your environment.<br/>__*Default*__: EmptyDirMedium.DEFAULT
+**sizeLimit**?🔹 | <code>[Size](#cdk8s-size)</code> | Total amount of local storage required for this EmptyDir volume.<br/>__*Default*__: limit is undefined
 
 
 
@@ -1952,8 +927,8 @@ Options for exposing a deployment via a service.
 Name | Type | Description 
 -----|------|-------------
 **name**?🔹 | <code>string</code> | The name of the service to expose.<br/>__*Default*__: undefined Uses the system generated name.
-**protocol**?🔹 | <code>[Protocol](#cdk8s-plus-18-protocol)</code> | The IP protocol for this port.<br/>__*Default*__: Protocol.TCP
-**serviceType**?🔹 | <code>[ServiceType](#cdk8s-plus-18-servicetype)</code> | The type of the exposed service.<br/>__*Default*__: ClusterIP.
+**protocol**?🔹 | <code>[Protocol](#cdk8s-plus-17-protocol)</code> | The IP protocol for this port.<br/>__*Default*__: Protocol.TCP
+**serviceType**?🔹 | <code>[ServiceType](#cdk8s-plus-17-servicetype)</code> | The type of the exposed service.<br/>__*Default*__: ClusterIP.
 **targetPort**?🔹 | <code>number</code> | The port number the service will redirect to.<br/>__*Default*__: The port of the first container in the deployment (ie. containers[0].port)
 
 
@@ -1968,18 +943,16 @@ Options for `Probe.fromHttpGet()`.
 Name | Type | Description 
 -----|------|-------------
 **failureThreshold**?🔹 | <code>number</code> | Minimum consecutive failures for the probe to be considered failed after having succeeded.<br/>__*Default*__: 3
-**initialDelaySeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Number of seconds after the container has started before liveness probes are initiated.<br/>__*Default*__: immediate
-**periodSeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | How often (in seconds) to perform the probe.<br/>__*Default*__: Duration.seconds(10) Minimum value is 1.
+**initialDelaySeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Number of seconds after the container has started before liveness probes are initiated.<br/>__*Default*__: immediate
+**periodSeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | How often (in seconds) to perform the probe.<br/>__*Default*__: Duration.seconds(10) Minimum value is 1.
 **port**?🔹 | <code>number</code> | The TCP port to use when sending the GET request.<br/>__*Default*__: defaults to `container.port`.
 **successThreshold**?🔹 | <code>number</code> | Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.<br/>__*Default*__: 1 Must be 1 for liveness and startup. Minimum value is 1.
-**timeoutSeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Number of seconds after which the probe times out.<br/>__*Default*__: Duration.seconds(1)
+**timeoutSeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Number of seconds after which the probe times out.<br/>__*Default*__: Duration.seconds(1)
 
 
 
 ## interface IConfigMap 🔹 <a id="cdk8s-plus-18-iconfigmap"></a>
 
-__Implemented by__: [ConfigMap](#cdk8s-plus-18-configmap)
-__Obtainable from__: [ConfigMap](#cdk8s-plus-18-configmap).[fromConfigMapName](#cdk8s-plus-18-configmap#cdk8s-plus-18-configmap-fromconfigmapname)()
 
 Represents a config map.
 
@@ -1994,7 +967,6 @@ Name | Type | Description
 
 ## interface IPodSpec 🔹 <a id="cdk8s-plus-18-ipodspec"></a>
 
-__Implemented by__: [Deployment](#cdk8s-plus-18-deployment), [Job](#cdk8s-plus-18-job), [Pod](#cdk8s-plus-18-pod), [PodSpec](#cdk8s-plus-18-podspec), [PodTemplate](#cdk8s-plus-18-podtemplate)
 
 Represents a resource that can be configured with a kuberenets pod spec. (e.g `Deployment`, `Job`, `Pod`, ...).
 
@@ -2005,10 +977,10 @@ Use the `PodSpec` class as an implementation helper.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**🔹 | <code>Array<[Container](#cdk8s-plus-18-container)></code> | The containers belonging to the pod.
-**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | The volumes associated with this pod.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
+**containers**🔹 | <code>Array<[Container](#cdk8s-plus-17-container)></code> | The containers belonging to the pod.
+**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | The volumes associated with this pod.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
 
 ### Methods
 
@@ -2021,22 +993,22 @@ Add a container to the pod.
 addContainer(container: ContainerProps): Container
 ```
 
-* **container** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  The container.
+* **container** (<code>[ContainerProps](#cdk8s-plus-17-containerprops)</code>)  The container.
   * **image** (<code>string</code>)  Docker image name. 
   * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
   * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
+  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-17-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
+  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-17-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
+  * **liveness** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
   * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
   * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
+  * **readiness** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
+  * **startup** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
+  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-17-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
   * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
 
 __Returns__:
-* <code>[Container](#cdk8s-plus-18-container)</code>
+* <code>[Container](#cdk8s-plus-17-container)</code>
 
 #### addVolume(volume)🔹 <a id="cdk8s-plus-18-ipodspec-addvolume"></a>
 
@@ -2046,7 +1018,7 @@ Add a volume to the pod.
 addVolume(volume: Volume): void
 ```
 
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  The volume.
+* **volume** (<code>[Volume](#cdk8s-plus-17-volume)</code>)  The volume.
 
 
 
@@ -2055,7 +1027,6 @@ addVolume(volume: Volume): void
 
 ## interface IPodTemplate 🔹 <a id="cdk8s-plus-18-ipodtemplate"></a>
 
-__Implemented by__: [Deployment](#cdk8s-plus-18-deployment), [Job](#cdk8s-plus-18-job), [PodTemplate](#cdk8s-plus-18-podtemplate)
 
 Represents a resource that can be configured with a kuberenets pod template. (e.g `Deployment`, `Job`, ...).
 
@@ -2066,11 +1037,11 @@ Use the `PodTemplate` class as an implementation helper.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**🔹 | <code>Array<[Container](#cdk8s-plus-18-container)></code> | The containers belonging to the pod.
+**containers**🔹 | <code>Array<[Container](#cdk8s-plus-17-container)></code> | The containers belonging to the pod.
 **podMetadata**🔹 | <code>[ApiObjectMetadataDefinition](#cdk8s-apiobjectmetadatadefinition)</code> | Provides read/write access to the underlying pod metadata of the resource.
-**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | The volumes associated with this pod.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
+**volumes**🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | The volumes associated with this pod.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Optional*__
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | The service account used to run this pod.<br/>__*Optional*__
 
 ### Methods
 
@@ -2083,22 +1054,22 @@ Add a container to the pod.
 addContainer(container: ContainerProps): Container
 ```
 
-* **container** (<code>[ContainerProps](#cdk8s-plus-18-containerprops)</code>)  The container.
+* **container** (<code>[ContainerProps](#cdk8s-plus-17-containerprops)</code>)  The container.
   * **image** (<code>string</code>)  Docker image name. 
   * **args** (<code>Array<string></code>)  Arguments to the entrypoint. The docker image's CMD is used if `command` is not provided. __*Default*__: []
   * **command** (<code>Array<string></code>)  Entrypoint array. __*Default*__: The docker image's ENTRYPOINT.
-  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-18-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
-  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-18-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
-  * **liveness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
+  * **env** (<code>Map<string, [EnvValue](#cdk8s-plus-17-envvalue)></code>)  List of environment variables to set in the container. __*Default*__: No environment variables.
+  * **imagePullPolicy** (<code>[ImagePullPolicy](#cdk8s-plus-17-imagepullpolicy)</code>)  Image pull policy for this container. __*Default*__: ImagePullPolicy.ALWAYS
+  * **liveness** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  Periodic probe of container liveness. __*Default*__: no liveness probe is defined
   * **name** (<code>string</code>)  Name of the container specified as a DNS_LABEL. __*Default*__: 'main'
   * **port** (<code>number</code>)  Number of port to expose on the pod's IP address. __*Default*__: No port is exposed.
-  * **readiness** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
-  * **startup** (<code>[Probe](#cdk8s-plus-18-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
-  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-18-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
+  * **readiness** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  Determines when the container is ready to serve traffic. __*Default*__: no readiness probe is defined
+  * **startup** (<code>[Probe](#cdk8s-plus-17-probe)</code>)  StartupProbe indicates that the Pod has successfully initialized. __*Default*__: no startup probe is defined.
+  * **volumeMounts** (<code>Array<[VolumeMount](#cdk8s-plus-17-volumemount)></code>)  Pod volumes to mount into the container's filesystem. __*Optional*__
   * **workingDir** (<code>string</code>)  Container's working directory. __*Default*__: The container runtime's default.
 
 __Returns__:
-* <code>[Container](#cdk8s-plus-18-container)</code>
+* <code>[Container](#cdk8s-plus-17-container)</code>
 
 #### addVolume(volume)🔹 <a id="cdk8s-plus-18-ipodtemplate-addvolume"></a>
 
@@ -2108,7 +1079,7 @@ Add a volume to the pod.
 addVolume(volume: Volume): void
 ```
 
-* **volume** (<code>[Volume](#cdk8s-plus-18-volume)</code>)  The volume.
+* **volume** (<code>[Volume](#cdk8s-plus-17-volume)</code>)  The volume.
 
 
 
@@ -2117,7 +1088,7 @@ addVolume(volume: Volume): void
 
 ## interface IResource 🔹 <a id="cdk8s-plus-18-iresource"></a>
 
-__Implemented by__: [ConfigMap](#cdk8s-plus-18-configmap), [Deployment](#cdk8s-plus-18-deployment), [Ingress](#cdk8s-plus-18-ingress), [Job](#cdk8s-plus-18-job), [Pod](#cdk8s-plus-18-pod), [Secret](#cdk8s-plus-18-secret), [Service](#cdk8s-plus-18-service), [ServiceAccount](#cdk8s-plus-18-serviceaccount)
+__Implemented by__: [Ingress](#cdk8s-plus-18-ingress)
 
 Represents a resource.
 
@@ -2132,8 +1103,6 @@ Name | Type | Description
 
 ## interface ISecret 🔹 <a id="cdk8s-plus-18-isecret"></a>
 
-__Implemented by__: [Secret](#cdk8s-plus-18-secret)
-__Obtainable from__: [Secret](#cdk8s-plus-18-secret).[fromSecretName](#cdk8s-plus-18-secret#cdk8s-plus-18-secret-fromsecretname)()
 
 
 
@@ -2148,8 +1117,6 @@ Name | Type | Description
 
 ## interface IServiceAccount 🔹 <a id="cdk8s-plus-18-iserviceaccount"></a>
 
-__Implemented by__: [ServiceAccount](#cdk8s-plus-18-serviceaccount)
-__Obtainable from__: [ServiceAccount](#cdk8s-plus-18-serviceaccount).[fromServiceAccountName](#cdk8s-plus-18-serviceaccount#cdk8s-plus-18-serviceaccount-fromserviceaccountname)()
 
 
 
@@ -2204,13 +1171,13 @@ Properties for initialization of `Job`.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
+**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
 **metadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Metadata that all persisted resources must have, which includes all objects users must create.<br/>__*Optional*__
 **podMetadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | The pod metadata.<br/>__*Optional*__
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
-**ttlAfterFinished**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Limits the lifetime of a Job that has finished execution (either Complete or Failed).<br/>__*Default*__: If this field is unset, the Job won't be automatically deleted.
-**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
+**ttlAfterFinished**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Limits the lifetime of a Job that has finished execution (either Complete or Failed).<br/>__*Default*__: If this field is unset, the Job won't be automatically deleted.
+**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
 
 
 
@@ -2223,7 +1190,7 @@ Options for mounts.
 
 Name | Type | Description 
 -----|------|-------------
-**propagation**?🔹 | <code>[MountPropagation](#cdk8s-plus-18-mountpropagation)</code> | Determines how mounts are propagated from the host to container and the other way around.<br/>__*Default*__: MountPropagation.NONE
+**propagation**?🔹 | <code>[MountPropagation](#cdk8s-plus-17-mountpropagation)</code> | Determines how mounts are propagated from the host to container and the other way around.<br/>__*Default*__: MountPropagation.NONE
 **readOnly**?🔹 | <code>boolean</code> | Mounted read-only if true, read-write otherwise (false or unspecified).<br/>__*Default*__: false
 **subPath**?🔹 | <code>string</code> | Path within the volume from which the container's volume should be mounted.).<br/>__*Default*__: "" the volume's root
 **subPathExpr**?🔹 | <code>string</code> | Expanded path within the volume from which the container's volume should be mounted.<br/>__*Default*__: "" volume's root.
@@ -2253,11 +1220,11 @@ Properties for initialization of `Pod`.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
+**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
 **metadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Metadata that all persisted resources must have, which includes all objects users must create.<br/>__*Optional*__
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
-**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
+**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
 
 
 
@@ -2270,10 +1237,10 @@ Properties of a `PodSpec`.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
-**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
+**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
+**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
 
 
 
@@ -2288,11 +1255,11 @@ Adds metadata information on top of the spec.
 
 Name | Type | Description 
 -----|------|-------------
-**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-18-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
+**containers**?🔹 | <code>Array<[ContainerProps](#cdk8s-plus-17-containerprops)></code> | List of containers belonging to the pod.<br/>__*Default*__: No containers. Note that a pod spec must include at least one container.
 **podMetadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | The pod metadata.<br/>__*Optional*__
-**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-18-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
-**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-18-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
-**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-18-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
+**restartPolicy**?🔹 | <code>[RestartPolicy](#cdk8s-plus-17-restartpolicy)</code> | Restart policy for all containers within the pod.<br/>__*Default*__: RestartPolicy.ALWAYS
+**serviceAccount**?🔹 | <code>[IServiceAccount](#cdk8s-plus-17-iserviceaccount)</code> | A service account provides an identity for processes that run in a Pod.<br/>__*Default*__: No service account.
+**volumes**?🔹 | <code>Array<[Volume](#cdk8s-plus-17-volume)></code> | List of volumes that can be mounted by containers belonging to the pod.<br/>__*Default*__: No volumes.
 
 
 
@@ -2306,10 +1273,10 @@ Probe options.
 Name | Type | Description 
 -----|------|-------------
 **failureThreshold**?🔹 | <code>number</code> | Minimum consecutive failures for the probe to be considered failed after having succeeded.<br/>__*Default*__: 3
-**initialDelaySeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Number of seconds after the container has started before liveness probes are initiated.<br/>__*Default*__: immediate
-**periodSeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | How often (in seconds) to perform the probe.<br/>__*Default*__: Duration.seconds(10) Minimum value is 1.
+**initialDelaySeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Number of seconds after the container has started before liveness probes are initiated.<br/>__*Default*__: immediate
+**periodSeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | How often (in seconds) to perform the probe.<br/>__*Default*__: Duration.seconds(10) Minimum value is 1.
 **successThreshold**?🔹 | <code>number</code> | Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1.<br/>__*Default*__: 1 Must be 1 for liveness and startup. Minimum value is 1.
-**timeoutSeconds**?🔹 | <code>[Duration](#cdk8s-plus-18-duration)</code> | Number of seconds after which the probe times out.<br/>__*Default*__: Duration.seconds(1)
+**timeoutSeconds**?🔹 | <code>[Duration](#cdk8s-duration)</code> | Number of seconds after which the probe times out.<br/>__*Default*__: Duration.seconds(1)
 
 
 
@@ -2350,7 +1317,7 @@ Represents a specific value in JSON secret.
 Name | Type | Description 
 -----|------|-------------
 **key**🔹 | <code>string</code> | The JSON key.
-**secret**🔹 | <code>[ISecret](#cdk8s-plus-18-isecret)</code> | The secret.
+**secret**🔹 | <code>[ISecret](#cdk8s-plus-17-isecret)</code> | The secret.
 
 
 
@@ -2359,14 +1326,12 @@ Name | Type | Description
 
 Properties for initialization of `ServiceAccount`.
 
-Properties for initialization of `ServiceAccount`.
-
 
 
 Name | Type | Description 
 -----|------|-------------
 **metadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Metadata that all persisted resources must have, which includes all objects users must create.<br/>__*Optional*__
-**secrets**?🔹 | <code>Array<[ISecret](#cdk8s-plus-18-isecret)></code> | List of secrets allowed to be used by pods running using this ServiceAccount.<br/>__*Optional*__
+**secrets**?🔹 | <code>Array<[ISecret](#cdk8s-plus-17-isecret)></code> | List of secrets allowed to be used by pods running using this ServiceAccount.<br/>__*Optional*__
 
 
 
@@ -2395,7 +1360,7 @@ Name | Type | Description
 **port**🔹 | <code>number</code> | The port number the service will bind to.
 **name**?🔹 | <code>string</code> | The name of this port within the service.<br/>__*Optional*__
 **nodePort**?🔹 | <code>number</code> | The port on each node on which this service is exposed when type=NodePort or LoadBalancer.<br/>__*Default*__: to auto-allocate a port if the ServiceType of this Service requires one.
-**protocol**?🔹 | <code>[Protocol](#cdk8s-plus-18-protocol)</code> | The IP protocol for this port.<br/>__*Default*__: Protocol.TCP
+**protocol**?🔹 | <code>[Protocol](#cdk8s-plus-17-protocol)</code> | The IP protocol for this port.<br/>__*Default*__: Protocol.TCP
 **targetPort**?🔹 | <code>number</code> | The port number the service will redirect to.<br/>__*Default*__: The value of `port` will be used.
 
 
@@ -2411,7 +1376,7 @@ Name | Type | Description
 -----|------|-------------
 **name**?🔹 | <code>string</code> | The name of this port within the service.<br/>__*Optional*__
 **nodePort**?🔹 | <code>number</code> | The port on each node on which this service is exposed when type=NodePort or LoadBalancer.<br/>__*Default*__: to auto-allocate a port if the ServiceType of this Service requires one.
-**protocol**?🔹 | <code>[Protocol](#cdk8s-plus-18-protocol)</code> | The IP protocol for this port.<br/>__*Default*__: Protocol.TCP
+**protocol**?🔹 | <code>[Protocol](#cdk8s-plus-17-protocol)</code> | The IP protocol for this port.<br/>__*Default*__: Protocol.TCP
 **targetPort**?🔹 | <code>number</code> | The port number the service will redirect to.<br/>__*Default*__: The value of `port` will be used.
 
 
@@ -2428,34 +1393,8 @@ Name | Type | Description
 **clusterIP**?🔹 | <code>string</code> | The IP address of the service and is usually assigned randomly by the master.<br/>__*Default*__: Automatically assigned.
 **externalIPs**?🔹 | <code>Array<string></code> | A list of IP addresses for which nodes in the cluster will also accept traffic for this service.<br/>__*Default*__: No external IPs.
 **metadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Metadata that all persisted resources must have, which includes all objects users must create.<br/>__*Optional*__
-**ports**?🔹 | <code>Array<[ServicePort](#cdk8s-plus-18-serviceport)></code> | The port exposed by this service.<br/>__*Optional*__
-**type**?🔹 | <code>[ServiceType](#cdk8s-plus-18-servicetype)</code> | Determines how the Service is exposed.<br/>__*Default*__: ServiceType.ClusterIP
-
-
-
-## struct SizeConversionOptions 🔹 <a id="cdk8s-plus-18-sizeconversionoptions"></a>
-
-
-Options for how to convert time to a different unit.
-
-
-
-Name | Type | Description 
------|------|-------------
-**rounding**?🔹 | <code>[SizeRoundingBehavior](#cdk8s-plus-18-sizeroundingbehavior)</code> | How conversions should behave when it encounters a non-integer result.<br/>__*Default*__: SizeRoundingBehavior.FAIL
-
-
-
-## struct TimeConversionOptions 🔹 <a id="cdk8s-plus-18-timeconversionoptions"></a>
-
-
-Options for how to convert time to a different unit.
-
-
-
-Name | Type | Description 
------|------|-------------
-**integral**?🔹 | <code>boolean</code> | If `true`, conversions into a larger time unit (e.g. `Seconds` to `Minutes`) will fail if the result is not an integer.<br/>__*Default*__: true
+**ports**?🔹 | <code>Array<[ServicePort](#cdk8s-plus-17-serviceport)></code> | The port exposed by this service.<br/>__*Optional*__
+**type**?🔹 | <code>[ServiceType](#cdk8s-plus-17-servicetype)</code> | Determines how the Service is exposed.<br/>__*Default*__: ServiceType.ClusterIP
 
 
 
@@ -2469,8 +1408,8 @@ Mount a volume from the pod to the container.
 Name | Type | Description 
 -----|------|-------------
 **path**🔹 | <code>string</code> | Path within the container at which the volume should be mounted.
-**volume**🔹 | <code>[Volume](#cdk8s-plus-18-volume)</code> | The volume to mount.
-**propagation**?🔹 | <code>[MountPropagation](#cdk8s-plus-18-mountpropagation)</code> | Determines how mounts are propagated from the host to container and the other way around.<br/>__*Default*__: MountPropagation.NONE
+**volume**🔹 | <code>[Volume](#cdk8s-plus-17-volume)</code> | The volume to mount.
+**propagation**?🔹 | <code>[MountPropagation](#cdk8s-plus-17-mountpropagation)</code> | Determines how mounts are propagated from the host to container and the other way around.<br/>__*Default*__: MountPropagation.NONE
 **readOnly**?🔹 | <code>boolean</code> | Mounted read-only if true, read-write otherwise (false or unspecified).<br/>__*Default*__: false
 **subPath**?🔹 | <code>string</code> | Path within the volume from which the container's volume should be mounted.).<br/>__*Default*__: "" the volume's root
 **subPathExpr**?🔹 | <code>string</code> | Expanded path within the volume from which the container's volume should be mounted.<br/>__*Default*__: "" volume's root.
@@ -2479,12 +1418,12 @@ Name | Type | Description
 
 ## enum EmptyDirMedium 🔹 <a id="cdk8s-plus-18-emptydirmedium"></a>
 
-The medium on which to store the volume.
+(experimental) The medium on which to store the volume.
 
 Name | Description
 -----|-----
-**DEFAULT** 🔹|The default volume of the backing node.
-**MEMORY** 🔹|Mount a tmpfs (RAM-backed filesystem) for you instead.
+**DEFAULT** 🔹|(experimental) The default volume of the backing node.
+**MEMORY** 🔹|(experimental) Mount a tmpfs (RAM-backed filesystem) for you instead.
 
 
 ## enum ImagePullPolicy 🔹 <a id="cdk8s-plus-18-imagepullpolicy"></a>
@@ -2493,9 +1432,9 @@ Name | Description
 
 Name | Description
 -----|-----
-**ALWAYS** 🔹|Every time the kubelet launches a container, the kubelet queries the container image registry to resolve the name to an image digest.
-**IF_NOT_PRESENT** 🔹|The image is pulled only if it is not already present locally.
-**NEVER** 🔹|The image is assumed to exist locally.
+**ALWAYS** 🔹|(experimental) Every time the kubelet launches a container, the kubelet queries the container image registry to resolve the name to an image digest.
+**IF_NOT_PRESENT** 🔹|(experimental) The image is pulled only if it is not already present locally.
+**NEVER** 🔹|(experimental) The image is assumed to exist locally.
 
 
 ## enum MountPropagation 🔹 <a id="cdk8s-plus-18-mountpropagation"></a>
@@ -2504,9 +1443,9 @@ Name | Description
 
 Name | Description
 -----|-----
-**NONE** 🔹|This volume mount will not receive any subsequent mounts that are mounted to this volume or any of its subdirectories by the host.
-**HOST_TO_CONTAINER** 🔹|This volume mount will receive all subsequent mounts that are mounted to this volume or any of its subdirectories.
-**BIDIRECTIONAL** 🔹|This volume mount behaves the same the HostToContainer mount.
+**NONE** 🔹|(experimental) This volume mount will not receive any subsequent mounts that are mounted to this volume or any of its subdirectories by the host.
+**HOST_TO_CONTAINER** 🔹|(experimental) This volume mount will receive all subsequent mounts that are mounted to this volume or any of its subdirectories.
+**BIDIRECTIONAL** 🔹|(experimental) This volume mount behaves the same the HostToContainer mount.
 
 
 ## enum Protocol 🔹 <a id="cdk8s-plus-18-protocol"></a>
@@ -2522,38 +1461,27 @@ Name | Description
 
 ## enum RestartPolicy 🔹 <a id="cdk8s-plus-18-restartpolicy"></a>
 
-Restart policy for all containers within the pod.
+(experimental) Restart policy for all containers within the pod.
 
 Name | Description
 -----|-----
-**ALWAYS** 🔹|Always restart the pod after it exits.
-**ON_FAILURE** 🔹|Only restart if the pod exits with a non-zero exit code.
-**NEVER** 🔹|Never restart the pod.
+**ALWAYS** 🔹|(experimental) Always restart the pod after it exits.
+**ON_FAILURE** 🔹|(experimental) Only restart if the pod exits with a non-zero exit code.
+**NEVER** 🔹|(experimental) Never restart the pod.
 
 
 ## enum ServiceType 🔹 <a id="cdk8s-plus-18-servicetype"></a>
 
-For some parts of your application (for example, frontends) you may want to expose a Service onto an external IP address, that's outside of your cluster.
+(experimental) For some parts of your application (for example, frontends) you may want to expose a Service onto an external IP address, that's outside of your cluster.
 
 Kubernetes ServiceTypes allow you to specify what kind of Service you want.
 The default is ClusterIP.
 
 Name | Description
 -----|-----
-**CLUSTER_IP** 🔹|Exposes the Service on a cluster-internal IP.
-**NODE_PORT** 🔹|Exposes the Service on each Node's IP at a static port (the NodePort).
-**LOAD_BALANCER** 🔹|Exposes the Service externally using a cloud provider's load balancer.
-**EXTERNAL_NAME** 🔹|Maps the Service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record with its value. No proxying of any kind is set up.
-
-
-## enum SizeRoundingBehavior 🔹 <a id="cdk8s-plus-18-sizeroundingbehavior"></a>
-
-Rounding behaviour when converting between units of `Size`.
-
-Name | Description
------|-----
-**FAIL** 🔹|Fail the conversion if the result is not an integer.
-**FLOOR** 🔹|If the result is not an integer, round it to the closest integer less than the result.
-**NONE** 🔹|Don't round.
+**CLUSTER_IP** 🔹|(experimental) Exposes the Service on a cluster-internal IP.
+**NODE_PORT** 🔹|(experimental) Exposes the Service on each Node's IP at a static port (the NodePort).
+**LOAD_BALANCER** 🔹|(experimental) Exposes the Service externally using a cloud provider's load balancer.
+**EXTERNAL_NAME** 🔹|(experimental) Maps the Service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record with its value. No proxying of any kind is set up.
 
 

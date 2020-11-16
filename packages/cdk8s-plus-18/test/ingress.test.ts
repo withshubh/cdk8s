@@ -1,5 +1,6 @@
 import { Testing } from 'cdk8s';
 import { IngressBackend, Service, Ingress } from '../src';
+import * as k8s from '../src/imports/k8s';
 
 describe('IngressBackend', () => {
   describe('fromService', () => {
@@ -11,8 +12,9 @@ describe('IngressBackend', () => {
       // WHEN
       service.serve(8899);
 
+      const backend = IngressBackend.fromService(service);
       // THEN
-      expect(IngressBackend.fromService(service)._toKube()).toEqual({
+      expect(ingressBackendSpec(backend)).toEqual({
         serviceName: 'test-my-service-pod-1c817a88',
         servicePort: 8899,
       });
@@ -48,8 +50,10 @@ describe('IngressBackend', () => {
       // WHEN
       service.serve(6011);
 
+      const backend = IngressBackend.fromService(service, { port: 6011 });
+
       // THEN
-      expect(IngressBackend.fromService(service, { port: 6011 })._toKube()).toEqual({
+      expect(ingressBackendSpec(backend)).toEqual({
         serviceName: 'test-my-service-pod-1c817a88',
         servicePort: 6011,
       });
@@ -65,8 +69,10 @@ describe('IngressBackend', () => {
       service.serve(8899);
       service.serve(1011);
 
+      const backend = IngressBackend.fromService(service, { port: 8899 });
+
       // THEN
-      expect(IngressBackend.fromService(service, { port: 8899 })._toKube()).toEqual({
+      expect(ingressBackendSpec(backend)).toEqual({
         serviceName: 'test-my-service-pod-1c817a88',
         servicePort: 8899,
       });
@@ -416,3 +422,7 @@ describe('Ingress', () => {
   });
 
 });
+
+function ingressBackendSpec(ib: IngressBackend): k8s.IngressBackend {
+  return (ib as any)._toKube();
+}

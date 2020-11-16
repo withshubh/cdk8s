@@ -1,3 +1,4 @@
+import * as cdk8s from 'cdk8s';
 import * as kplus from '../src';
 import * as k8s from '../src/imports/k8s';
 
@@ -94,7 +95,7 @@ describe('Container', () => {
       },
     });
 
-    const actual: k8s.Container = container._toKube();
+    const actual: k8s.Container = containerSpec(container);
 
     const expected: k8s.Container = {
       name: 'name',
@@ -125,7 +126,7 @@ describe('Container', () => {
 
     container.addEnv('key', kplus.EnvValue.fromValue('value'));
 
-    const actual: k8s.EnvVar[] = container._toKube().env!;
+    const actual: k8s.EnvVar[] = containerSpec(container).env!;
     const expected: k8s.EnvVar[] = [{
       name: 'key',
       value: 'value',
@@ -151,7 +152,7 @@ describe('Container', () => {
       name: volume.name,
     };
 
-    expect(container._toKube().volumeMounts).toEqual([expected]);
+    expect(containerSpec(container).volumeMounts).toEqual([expected]);
   });
 
   test('mount options', () => {
@@ -173,7 +174,7 @@ describe('Container', () => {
       readOnly: true,
     };
 
-    expect(container._toKube().volumeMounts).toEqual([expected]);
+    expect(containerSpec(container).volumeMounts).toEqual([expected]);
   });
 
   test('mount from ctor', () => {
@@ -194,7 +195,7 @@ describe('Container', () => {
       subPath: 'subPath',
     };
 
-    expect(container._toKube().volumeMounts).toEqual([expected]);
+    expect(containerSpec(container).volumeMounts).toEqual([expected]);
   });
 
   test('"readiness", "liveness", and "startup" can be used to define probes', () => {
@@ -202,18 +203,18 @@ describe('Container', () => {
     const container = new kplus.Container({
       image: 'foo',
       readiness: kplus.Probe.fromHttpGet('/ping', {
-        timeoutSeconds: kplus.Duration.minutes(2),
+        timeoutSeconds: cdk8s.Duration.minutes(2),
       }),
       liveness: kplus.Probe.fromHttpGet('/live', {
-        timeoutSeconds: kplus.Duration.minutes(3),
+        timeoutSeconds: cdk8s.Duration.minutes(3),
       }),
       startup: kplus.Probe.fromHttpGet('/startup', {
-        timeoutSeconds: kplus.Duration.minutes(4),
+        timeoutSeconds: cdk8s.Duration.minutes(4),
       }),
     });
 
     // THEN
-    expect(container._toKube().readinessProbe).toEqual({
+    expect(containerSpec(container).readinessProbe).toEqual({
       failureThreshold: 3,
       httpGet: { path: '/ping', port: 80 },
       initialDelaySeconds: undefined,
@@ -221,7 +222,7 @@ describe('Container', () => {
       successThreshold: undefined,
       timeoutSeconds: 120,
     });
-    expect(container._toKube().livenessProbe).toEqual({
+    expect(containerSpec(container).livenessProbe).toEqual({
       failureThreshold: 3,
       httpGet: { path: '/live', port: 80 },
       initialDelaySeconds: undefined,
@@ -229,7 +230,7 @@ describe('Container', () => {
       successThreshold: undefined,
       timeoutSeconds: 180,
     });
-    expect(container._toKube().startupProbe).toEqual({
+    expect(containerSpec(container).startupProbe).toEqual({
       failureThreshold: 3,
       httpGet: { path: '/startup', port: 80 },
       initialDelaySeconds: undefined,
@@ -240,3 +241,7 @@ describe('Container', () => {
   });
 
 });
+
+function containerSpec(c: kplus.Container): k8s.Container {
+  return (c as any)._toKube();
+}

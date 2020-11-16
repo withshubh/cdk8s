@@ -1,4 +1,6 @@
-import { Container, Duration, Probe } from '../src';
+import { Duration } from 'cdk8s';
+import { Container, Probe } from '../src';
+import * as k8s from '../src/imports/k8s';
 
 describe('fromHttpGet()', () => {
   test('defaults to the container port', () => {
@@ -9,7 +11,7 @@ describe('fromHttpGet()', () => {
     const min = Probe.fromHttpGet('/hello');
 
     // THEN
-    expect(min._toKube(container)).toEqual({
+    expect(probeSpec(min, container)).toEqual({
       failureThreshold: 3,
       httpGet: {
         path: '/hello',
@@ -30,7 +32,7 @@ describe('fromHttpGet()', () => {
     const min = Probe.fromHttpGet('/hello', { port: 1234 });
 
     // THEN
-    expect(min._toKube(container)).toEqual({
+    expect(probeSpec(min, container)).toEqual({
       failureThreshold: 3,
       httpGet: {
         path: '/hello',
@@ -57,7 +59,7 @@ describe('fromHttpGet()', () => {
     });
 
     // THEN
-    expect(min._toKube(container)).toEqual({
+    expect(probeSpec(min, container)).toEqual({
       httpGet: {
         path: '/hello',
         port: 5555,
@@ -82,7 +84,7 @@ describe('fromCommand()', () => {
     const min = Probe.fromCommand(['foo', 'bar']);
 
     // THEN
-    expect(min._toKube(container)).toEqual({
+    expect(probeSpec(min, container)).toEqual({
       exec: { command: ['foo', 'bar'] },
       failureThreshold: 3,
       initialDelaySeconds: undefined,
@@ -106,7 +108,7 @@ describe('fromCommand()', () => {
     });
 
     // THEN
-    expect(min._toKube(container)).toEqual({
+    expect(probeSpec(min, container)).toEqual({
       exec: { command: ['foo', 'bar'] },
       failureThreshold: 11,
       initialDelaySeconds: 60,
@@ -117,3 +119,7 @@ describe('fromCommand()', () => {
   });
 
 });
+
+function probeSpec(p: Probe, c: Container): k8s.Probe {
+  return (p as any)._toKube(c);
+}
