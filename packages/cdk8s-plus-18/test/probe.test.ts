@@ -1,6 +1,6 @@
 import { Duration } from 'cdk8s';
 import { Container, Probe } from '../src';
-import * as k8s from '../src/imports/k8s';
+import * as k8s from '../src/imports/v18/k8s';
 
 describe('fromHttpGet()', () => {
   test('defaults to the container port', () => {

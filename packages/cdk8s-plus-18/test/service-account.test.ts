@@ -1,6 +1,39 @@
 import { Testing } from 'cdk8s';
 import * as kplus from '../src';
 
+test('imagePullSecrets', () => {
+  // GIVEN
+  const chart = Testing.chart();
+
+  // WHEN
+  new kplus.ServiceAccount(chart, 'my-service-account', {
+    secrets: [kplus.Secret.fromSecretName('asd')],
+    imagePullSecrets: ['hello'],
+  });
+
+  expect(Testing.synth(chart)).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "apiVersion": "v1",
+        "imagePullSecrets": Array [
+          Object {
+            "name": "hello",
+          },
+        ],
+        "kind": "ServiceAccount",
+        "metadata": Object {
+          "name": "test-my-service-account-resource-a5be5a3b",
+        },
+        "secrets": Array [
+          Object {
+            "name": "asd",
+          },
+        ],
+      },
+    ]
+  `);
+});
+
 test('minimal definition', () => {
   // GIVEN
   const chart = Testing.chart();

@@ -15,13 +15,12 @@ const project = new JsiiProject({
   peerDependencies: {
     "cdk8s": Semver.caret('0.0.0'),
     "constructs": Semver.caret(common.versions.constructs),
-    "cdk8s-plus-17": Semver.caret('0.0.0'),
   },
   dependencies: {
     minimatch: Semver.caret('3.0.4'),
     "cdk8s-plus-17": Semver.caret('0.0.0'),
   },
-  bundledDependencies: [ 'minimatch' ],
+  bundledDependencies: [ 'minimatch' , 'cdk8s-plus-17' ],
   devDependencies: {
     '@types/minimatch': Semver.caret('3.0.3'),
     "cdk8s": Semver.caret('0.0.0'),

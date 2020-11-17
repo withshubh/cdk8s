@@ -1,7 +1,7 @@
 import { ApiObject, Lazy } from 'cdk8s';
 import { Construct } from 'constructs';
 import { Resource, ResourceProps } from './base';
-import * as k8s from './imports/k8s';
+import * as k8s from './imports/v18/k8s';
 import { Service } from './service';
 
 /**

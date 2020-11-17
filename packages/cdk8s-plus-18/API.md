@@ -701,9 +701,10 @@ new ServiceAccount(scope: Construct, id: string, props?: ServiceAccountProps)
 
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[ServiceAccountProps](#cdk8s-plus-17-serviceaccountprops)</code>)  *No description*
+* **props** (<code>[ServiceAccountProps](#cdk8s-plus-18-serviceaccountprops)</code>)  *No description*
   * **metadata** (<code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code>)  Metadata that all persisted resources must have, which includes all objects users must create. __*Optional*__
   * **secrets** (<code>Array<[ISecret](#cdk8s-plus-17-isecret)></code>)  List of secrets allowed to be used by pods running using this ServiceAccount. __*Optional*__
+  * **imagePullSecrets** (<code>Array<string></code>)  *No description* __*Optional*__
 
 
 
@@ -1330,6 +1331,7 @@ Properties for initialization of `ServiceAccount`.
 
 Name | Type | Description 
 -----|------|-------------
+**imagePullSecrets**?🔹 | <code>Array<string></code> | __*Optional*__
 **metadata**?🔹 | <code>[ApiObjectMetadata](#cdk8s-apiobjectmetadata)</code> | Metadata that all persisted resources must have, which includes all objects users must create.<br/>__*Optional*__
 **secrets**?🔹 | <code>Array<[ISecret](#cdk8s-plus-17-isecret)></code> | List of secrets allowed to be used by pods running using this ServiceAccount.<br/>__*Optional*__
 
