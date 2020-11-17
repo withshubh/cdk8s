@@ -1,4 +1,5 @@
 import { ApiObject, ApiObjectMetadataDefinition, Lazy, Names } from 'cdk8s';
+import * as prev from 'cdk8s-plus-17';
 import { Construct, Node } from 'constructs';
 import { Resource, ResourceProps } from './base';
 import { Container, ContainerProps } from './container';
@@ -110,6 +111,8 @@ export class Deployment extends Resource implements IPodTemplate {
   private readonly _podTemplate: PodTemplate;
   private readonly _labelSelector: Record<string, string>;
 
+  private readonly _prev: prev.Deployment;
+
   constructor(scope: Construct, id: string, props: DeploymentProps = {}) {
     super(scope, id, { metadata: props.metadata });
 
@@ -117,6 +120,8 @@ export class Deployment extends Resource implements IPodTemplate {
       metadata: props.metadata,
       spec: Lazy.any({ produce: () => this._toKube() }),
     });
+
+    this._prev = new prev.Deployment(scope, id, props);
 
     this.replicas = props.replicas ?? 1;
     this._podTemplate = new PodTemplate(props);

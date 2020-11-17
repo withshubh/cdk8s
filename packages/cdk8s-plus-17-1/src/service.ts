@@ -1,4 +1,5 @@
 import * as cdk8s from 'cdk8s';
+import * as prev from 'cdk8s-plus-17';
 import { Construct } from 'constructs';
 import { ResourceProps, Resource } from './base';
 import { Deployment } from './deployment';
@@ -124,6 +125,8 @@ export class Service extends Resource {
    */
   protected readonly apiObject: cdk8s.ApiObject;
 
+  private readonly _prev: prev.Service;
+
   private readonly _externalIPs: string[];
   private readonly _selector: Record<string, string>;
   private readonly _ports: ServicePort[];
@@ -177,31 +180,7 @@ export class Service extends Resource {
    * @param options Optional settings for the port.
    */
   public addDeployment(deployment: Deployment, port: number, options: ServicePortOptions = {}) {
-    const containers = deployment.containers;
-    if (containers.length === 0) {
-      throw new Error('Cannot expose a deployment without containers');
-    }
-
-    const selector = Object.entries(deployment.labelSelector);
-    if (selector.length === 0) {
-      throw new Error('deployment does not have a label selector');
-    }
-
-    if (Object.keys(this.selector).length > 0) {
-      throw new Error('a selector is already defined for this service. cannot add a deployment');
-    }
-
-    for (const [k, v] of selector) {
-      this.addSelector(k, v);
-    }
-
-    this.serve(port, {
-      ...options,
-
-      // just a PoC, we assume the first container is the main one.
-      // TODO: figure out what the correct thing to do here.
-      targetPort: options.targetPort ?? containers[0].port,
-    });
+    this._prev.addDeployment(deployment, port, options);
   }
 
   /**
@@ -224,34 +203,34 @@ export class Service extends Resource {
     this._ports.push({ port, ...options });
   }
 
-  /**
-   * @internal
-   */
-  public _toKube(): k8s.ServiceSpec {
-    if (this._ports.length === 0) {
-      throw new Error('A service must be configured with a port');
-    }
+  // /**
+  //  * @internal
+  //  */
+  // public _toKube(): k8s.ServiceSpec {
+  //   if (this._ports.length === 0) {
+  //     throw new Error('A service must be configured with a port');
+  //   }
 
-    const ports: k8s.ServicePort[] = [];
+  //   const ports: k8s.ServicePort[] = [];
 
-    for (const port of this._ports) {
-      ports.push({
-        name: port.name,
-        port: port.port,
-        targetPort: port.targetPort,
-        nodePort: port.nodePort,
-        protocol: port.protocol,
-      });
-    }
+  //   for (const port of this._ports) {
+  //     ports.push({
+  //       name: port.name,
+  //       port: port.port,
+  //       targetPort: port.targetPort,
+  //       nodePort: port.nodePort,
+  //       protocol: port.protocol,
+  //     });
+  //   }
 
-    return {
-      clusterIP: this.clusterIP,
-      externalIPs: this._externalIPs,
-      type: this.type,
-      selector: this._selector,
-      ports: ports,
-    };
-  }
+  //   return {
+  //     clusterIP: this.clusterIP,
+  //     externalIPs: this._externalIPs,
+  //     type: this.type,
+  //     selector: this._selector,
+  //     ports: ports,
+  //   };
+  // }
 
 }
 
