@@ -1,0 +1,36 @@
+{
+  "name": "ingress-example",
+  "version": "0.0.0",
+  "main": "main.js",
+  "types": "main.ts",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "import": "cdk8s import",
+    "synth": "cdk8s synth",
+    "cdk-synth": "cdk synth",
+    "cdk-deploy": "cdk deploy",
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "test": "echo ok",
+    "build": "npm run compile && npm run test && npm run synth"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-eks": "^1.75.0",
+    "@aws-cdk/aws-sns": "^1.75.0",
+    "@aws-cdk/aws-sns-subscriptions": "^1.75.0",
+    "@aws-cdk/aws-elasticsearch": "^1.75.0",
+    "@aws-cdk/aws-sqs": "^1.75.0",
+    "@aws-cdk/core": "^1.75.0",
+    "cdk8s": "1.0.0-beta.3",
+    "cdk8s-plus-17": "1.0.0-beta.3",
+    "constructs": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "cdk8s-cli": "0.0.0",
+    "typescript": "^3.9.7",
+    "aws-cdk": "^1.75.0",
+    "ts-node": "^9.0.0"
+  }
+}
