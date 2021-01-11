@@ -18,7 +18,7 @@ if (!username) {
   throw new Error('ELASTIC_USERNAME env variable is required');
 }
 
-var port = process.argv[2];
+let port = process.argv[2];
 
 console.log('Creating a server...');
 http.createServer(function (req: http.IncomingMessage, res: http.ServerResponse) {
