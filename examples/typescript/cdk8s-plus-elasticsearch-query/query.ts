@@ -32,7 +32,7 @@ http.createServer(function (req: http.IncomingMessage, res: http.ServerResponse)
 
     console.log(`Received request: ${req.url}`);
 
-    let uri = req.url?.split('?')[1];
+    const uri = req.url?.split('?')[1];
 
     if (!uri) {
       throw new Error('URI is undefined');
